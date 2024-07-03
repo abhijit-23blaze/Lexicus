@@ -1,29 +1,41 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { Search, Menu, Settings, Folder, Home, Heart, Lightbulb, BookOpen, Trash } from 'lucide-react';
+import ImportBook from './components/ImportBook';
 
-const Header = () => (
-  <header className="flex items-center justify-between p-4 bg-white">
-    <div className="flex items-center">
-      <Menu className="mr-4 text-gray-600" />
-      <h1 className="text-2xl font-semibold">Lexicus</h1>
-    </div>
-    <div className="flex-1 mx-8">
-      <div className="relative">
-        <input
-          type="text"
-          placeholder="Search my library"
-          className="w-full py-2 px-4 bg-purple-100 rounded-full text-sm"
-        />
-        <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+const Header = () => {
+  const navigate = useNavigate();
+  
+  return (
+    <header className="flex items-center justify-between p-4 bg-white">
+      <div className="flex items-center">
+        <Menu className="mr-4 text-gray-600" />
+        <h1 className="text-2xl font-semibold">Lexicus</h1>
       </div>
-    </div>
-    <div className="flex items-center">
-      <Settings className="mr-4 text-gray-600" />
-      <Folder className="mr-4 text-gray-600" />
-      <button className="bg-purple-600 text-white px-4 py-2 rounded-md">Import</button>
-    </div>
-  </header>
-);
+      <div className="flex-1 mx-8">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search my library"
+            className="w-full py-2 px-4 bg-purple-100 rounded-full text-sm"
+          />
+          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        </div>
+      </div>
+      <div className="flex items-center">
+        <Settings className="mr-4 text-gray-600" />
+        <Folder className="mr-4 text-gray-600" />
+        <button 
+          className="bg-purple-600 text-white px-4 py-2 rounded-md"
+          onClick={() => navigate('/import')}
+        >
+          Import
+        </button>
+      </div>
+    </header>
+  );
+};
+
 
 const Sidebar = () => (
   <aside className="w-64 bg-white p-4">
@@ -68,6 +80,19 @@ const BookGrid = ({ books }) => (
   </div>
 );
 
+const HomePage = ({ books }) => (
+  <div className="flex flex-col h-screen bg-gray-100">
+    <Header />
+    <div className="flex flex-1 overflow-hidden">
+      <Sidebar />
+      <main className="flex-1 overflow-y-auto">
+        <BookGrid books={books} />
+      </main>
+    </div>
+  </div>
+);
+
+
 const App = () => {
   const [books] = useState([
     { id: 1, title: "THE PLAN", author: "Unknown author", publisher: "", coverUrl: "https://via.placeholder.com/150", description: "Empty" },
@@ -80,15 +105,12 @@ const App = () => {
   ]);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <Header />
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar />
-        <main className="flex-1 overflow-y-auto">
-          <BookGrid books={books} />
-        </main>
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage books={books} />} />
+        <Route path="/import" element={<ImportBook />} />
+      </Routes>
+    </Router>
   );
 };
 
