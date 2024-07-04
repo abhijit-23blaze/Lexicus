@@ -1,0 +1,71 @@
+[
+    {
+      "id": 1,
+      "title": "THE PLAN",
+      "author": "Unknown author",
+      "publisher": "",
+      "coverUrl": "https://via.placeholder.com/150",
+      "description": "Empty",
+      "shelf": "study"
+    },
+    {
+      "id": 2,
+      "title": "HACK4BIOHERITAGE.docx",
+      "author": "Unknown author",
+      "publisher": "Skia/PDF m125 Google Do...",
+      "coverUrl": "https://via.placeholder.com/150",
+      "description": "Empty",
+      "progress": 84,
+      "shelf": "work"
+    },
+    {
+      "id": 3,
+      "title": "Blue Lock v01 (2021) (Digital) (danke-Empire)",
+      "author": "Unknown author",
+      "publisher": "",
+      "coverUrl": "https://via.placeholder.com/150",
+      "description": "Empty",
+      "progress": 84,
+      "shelf": "blueLock"
+    },
+    {
+      "id": 4,
+      "title": "-Problem Statement-",
+      "author": "Ritavan Dasgupta",
+      "publisher": "Canva",
+      "coverUrl": "https://via.placeholder.com/150",
+      "description": "Empty",
+      "progress": 100,
+      "shelf": "study"
+    },
+    {
+      "id": 5,
+      "title": "The Subtle Art of Not Giving a F*ck - EnglishPDF",
+      "author": "Mark Manson",
+      "publisher": "calibre 3.44.0",
+      "coverUrl": "https://via.placeholder.com/150",
+      "description": "Empty",
+      "shelf": "selfHelp"
+    },
+    {
+      "id": 6,
+      "title": "Zero to One: Notes on Startups, or How to Build the Future",
+      "author": "Peter Thiel & Blake Masters",
+      "publisher": "calibre 0.9.22",
+      "coverUrl": "https://via.placeholder.com/150",
+      "description": "Empty",
+      "progress": 75,
+      "shelf": "study"
+    },
+    {
+      "id": 7,
+      "title": "Blue Lock - Volume 01",
+      "author": "CamScanner",
+      "publisher": "iLovePDF",
+      "coverUrl": "https://via.placeholder.com/150",
+      "description": "Empty",
+      "progress": 99,
+      "shelf": "blueLock"
+    }
+  ]
+  
