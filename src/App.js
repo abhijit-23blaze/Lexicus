@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { Search, Menu, Settings, Folder, Home, Heart, Lightbulb, BookOpen, Trash, X } from 'lucide-react';
 import ImportBook from './components/ImportBook';
+import BookCard from './BookCard';
 
 const Header = ({ toggleSidebar }) => {
   const navigate = useNavigate();
@@ -79,7 +80,7 @@ const BookCard = ({ book }) => (
 );
 
 const BookGrid = ({ books }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+  <div className="grid grid-cols-1 gap-6 p-6">
     {books.map(book => <BookCard key={book.id} book={book} />)}
   </div>
 );
