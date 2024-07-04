@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
-import { Search, Menu, Settings, Folder, Home, Heart, Lightbulb, BookOpen, Trash } from 'lucide-react';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { Search, Menu, Settings, Folder, Home, Heart, Lightbulb, BookOpen, Trash, X } from 'lucide-react';
 import ImportBook from './components/ImportBook';
 
-const Header = () => {
+const Header = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   
   return (
     <header className="flex items-center justify-between p-4 bg-white">
       <div className="flex items-center">
-        <Menu className="mr-4 text-gray-600" />
+        <button onClick={toggleSidebar} className="mr-4 text-gray-600 lg:hidden">
+          <Menu size={24} />
+        </button>
         <h1 className="text-2xl font-semibold">Lexicus</h1>
       </div>
-      <div className="flex-1 mx-8">
+      <div className="flex-1 mx-8 hidden md:block">
         <div className="relative">
           <input
             type="text"
@@ -23,8 +25,8 @@ const Header = () => {
         </div>
       </div>
       <div className="flex items-center">
-        <Settings className="mr-4 text-gray-600" />
-        <Folder className="mr-4 text-gray-600" />
+        <Settings className="mr-4 text-gray-600 hidden sm:block" />
+        <Folder className="mr-4 text-gray-600 hidden sm:block" />
         <button 
           className="bg-purple-600 text-white px-4 py-2 rounded-md"
           onClick={() => navigate('/import')}
@@ -36,10 +38,12 @@ const Header = () => {
   );
 };
 
-
-const Sidebar = () => (
-  <aside className="w-64 bg-white p-4">
-    <nav>
+const Sidebar = ({ isOpen, toggleSidebar }) => (
+  <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white p-4 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0`}>
+    <button onClick={toggleSidebar} className="absolute top-4 right-4 text-gray-600 lg:hidden">
+      <X size={24} />
+    </button>
+    <nav className="mt-8 lg:mt-0">
       <ul>
         <li className="mb-2"><a href="#" className="flex items-center text-purple-600 font-semibold"><Home className="mr-2" /> Books</a></li>
         <li className="mb-2"><a href="#" className="flex items-center text-gray-600"><Heart className="mr-2" /> Favorites</a></li>
@@ -75,22 +79,28 @@ const BookCard = ({ book }) => (
 );
 
 const BookGrid = ({ books }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
     {books.map(book => <BookCard key={book.id} book={book} />)}
   </div>
 );
 
-const HomePage = ({ books }) => (
-  <div className="flex flex-col h-screen bg-gray-100">
-    <Header />
-    <div className="flex flex-1 overflow-hidden">
-      <Sidebar />
-      <main className="flex-1 overflow-y-auto">
-        <BookGrid books={books} />
-      </main>
+const HomePage = ({ books }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
+  return (
+    <div className="flex flex-col h-screen bg-gray-100">
+      <Header toggleSidebar={toggleSidebar} />
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <main className="flex-1 overflow-y-auto">
+          <BookGrid books={books} />
+        </main>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 
 const App = () => {
