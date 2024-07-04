@@ -67,13 +67,20 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf }) => (
   </aside>
 );
 
-const BookGrid = ({ books, toggleFavorite }) => (
+const BookGrid = ({ books, toggleFavorite, favorites }) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
-    {books.map(book => <BookCard key={book.id} book={book} toggleFavorite={toggleFavorite} />)}
+    {books.map(book => (
+      <BookCard 
+        key={book.id} 
+        book={book} 
+        toggleFavorite={toggleFavorite} 
+        isFavorite={favorites.includes(book.id)} 
+      />
+    ))}
   </div>
 );
 
-const HomePage = ({ books, toggleFavorite, setShelf, currentShelf }) => {
+const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -84,8 +91,7 @@ const HomePage = ({ books, toggleFavorite, setShelf, currentShelf }) => {
       <div className="flex flex-1 overflow-hidden">
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} setShelf={setShelf} />
         <main className="flex-1 overflow-y-auto">
-          <h2 className="text-2xl font-semibold p-4">{currentShelf.charAt(0).toUpperCase() + currentShelf.slice(1)} Books</h2>
-          <BookGrid books={books} toggleFavorite={toggleFavorite} />
+          <BookGrid books={books} toggleFavorite={toggleFavorite} favorites={favorites} />
         </main>
       </div>
     </div>
@@ -105,13 +111,6 @@ const App = () => {
         return [...prevFavorites, bookId];
       }
     });
-
-    // Update the books to reflect the favorite status
-    setBooks(prevBooks =>
-      prevBooks.map(book =>
-        book.id === bookId ? { ...book, isFavorite: !book.isFavorite } : book
-      )
-    );
   };
 
   const getBooksByShelf = (shelf) => {
@@ -132,6 +131,7 @@ const App = () => {
               toggleFavorite={toggleFavorite} 
               setShelf={setCurrentShelf} 
               currentShelf={currentShelf}
+              favorites={favorites}
             />
           } 
         />
