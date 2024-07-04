@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
 
-const BookCard = ({ book, toggleFavorite }) => (
+const BookCard = ({ book, toggleFavorite, isFavorite }) => (
   <div className="bg-white p-4 rounded-lg shadow flex flex-col sm:flex-row h-full relative">
     <div className="flex-shrink-0 mb-4 sm:mb-0">
       <img 
@@ -34,7 +34,7 @@ const BookCard = ({ book, toggleFavorite }) => (
       className="absolute top-4 right-4 text-gray-600"
       onClick={() => toggleFavorite(book.id)}
     >
-      <Heart size={24} className={book.isFavorite ? 'text-red-500' : 'text-gray-400'} />
+      <Heart size={24} className={isFavorite ? 'text-red-500' : 'text-gray-400'} />
     </button>
   </div>
 );

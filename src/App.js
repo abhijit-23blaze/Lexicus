@@ -105,6 +105,13 @@ const App = () => {
         return [...prevFavorites, bookId];
       }
     });
+
+    // Update the books to reflect the favorite status
+    setBooks(prevBooks =>
+      prevBooks.map(book =>
+        book.id === bookId ? { ...book, isFavorite: !book.isFavorite } : book
+      )
+    );
   };
 
   const getBooksByShelf = (shelf) => {
