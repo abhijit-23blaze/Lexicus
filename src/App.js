@@ -49,21 +49,61 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf }) => (
     </button>
     <nav className="mt-8 lg:mt-0">
       <ul>
-        <li className="mb-2"><button onClick={() => setShelf('all')} className="flex items-center text-purple-600 font-semibold"><Home className="mr-2" /> Books</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('favorites')} className="flex items-center text-gray-600"><Heart className="mr-2" /> Favorites</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('notes')} className="flex items-center text-gray-600"><Lightbulb className="mr-2" /> Notes</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('highlights')} className="flex items-center text-gray-600"><BookOpen className="mr-2" /> Highlights</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('trash')} className="flex items-center text-gray-600"><Trash className="mr-2" /> Trash</button></li>
+        <li className="mb-2">
+          <button onClick={() => setShelf('all')} className="flex items-center text-purple-600 font-semibold">
+            <Home className="mr-2" /> Books
+          </button>
+        </li>
+        <li className="mb-2">
+          <button onClick={() => setShelf('favorites')} className="flex items-center text-gray-600">
+            <Heart className="mr-2" /> Favorites
+          </button>
+        </li>
+        <li className="mb-2">
+          <button onClick={() => setShelf('notes')} className="flex items-center text-gray-600">
+            <Lightbulb className="mr-2" /> Notes
+          </button>
+        </li>
+        <li className="mb-2">
+          <button onClick={() => setShelf('highlights')} className="flex items-center text-gray-600">
+            <BookOpen className="mr-2" /> Highlights
+          </button>
+        </li>
+        <li className="mb-2">
+          <button onClick={() => setShelf('trash')} className="flex items-center text-gray-600">
+            <Trash className="mr-2" /> Trash
+          </button>
+        </li>
       </ul>
     </nav>
     <div className="mt-8">
-      <h3 className="font-semibold mb-2"><SquareLibrary className="mr-2" />Shelf</h3>
+      <h3 className="font-semibold mb-2 flex items-center"><SquareLibrary className="mr-2" /> Shelf</h3>
       <ul>
-        <li className="mb-2"><button onClick={() => setShelf('study')} className="text-gray-600"><Library className="mr-2" />Study</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('work')} className="text-gray-600"><Library className="mr-2" />Work</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('entertainment')} className="text-gray-600"><Library className="mr-2" />Entertainment</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('selfHelp')} className="text-gray-600"><Library className="mr-2" />Self Help</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('blueLock')} className="text-gray-600"><Library className="mr-2" />Blue Lock</button></li>
+        <li className="mb-2">
+          <button onClick={() => setShelf('study')} className="flex items-center text-gray-600">
+            <Library className="mr-2" /> Study
+          </button>
+        </li>
+        <li className="mb-2">
+          <button onClick={() => setShelf('work')} className="flex items-center text-gray-600">
+            <Library className="mr-2" /> Work
+          </button>
+        </li>
+        <li className="mb-2">
+          <button onClick={() => setShelf('entertainment')} className="flex items-center text-gray-600">
+            <Library className="mr-2" /> Entertainment
+          </button>
+        </li>
+        <li className="mb-2">
+          <button onClick={() => setShelf('selfHelp')} className="flex items-center text-gray-600">
+            <Library className="mr-2" /> Self Help
+          </button>
+        </li>
+        <li className="mb-2">
+          <button onClick={() => setShelf('blueLock')} className="flex items-center text-gray-600">
+            <Library className="mr-2" /> Blue Lock
+          </button>
+        </li>
       </ul>
     </div>
   </aside>
