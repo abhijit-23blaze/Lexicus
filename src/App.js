@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import { Search, SquareLibrary, Library, Menu, Settings, Folder, Home, Heart, Lightbulb, BookOpen, Trash, X } from 'lucide-react';
+import { Search, SquareLibrary, Library, Menu, Settings, Folder, Home, X } from 'lucide-react';
 import ImportBook from './components/ImportBook';
 import BookCard from './components/BookCard';
 import booksData from './data/books.json'; // Import the JSON file
@@ -180,9 +180,27 @@ const App = () => {
           } 
         />
         <Route path="/import" element={<ImportBook />} />
+        {/* Add routes for each book link */}
+        {books.map(book => (
+          <Route 
+            key={book.id} 
+            path={book.link} 
+            element={<BookDetails book={book} />} 
+          />
+        ))}
       </Routes>
     </Router>
   );
 };
+
+// A simple BookDetails component to render the book details page
+const BookDetails = ({ book }) => (
+  <div className="p-6 bg-white">
+    <h1 className="text-3xl font-semibold mb-4">{book.title}</h1>
+    <p className="text-lg mb-2">Author: {book.author}</p>
+    <p className="text-lg mb-4">Description: {book.description}</p>
+    <img src={book.coverUrl} alt={book.title} className="w-full max-w-xs rounded shadow-lg" />
+  </div>
+);
 
 export default App;
