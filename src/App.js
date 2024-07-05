@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import { Search, Menu, Settings, Folder, Home, Heart, Lightbulb, BookOpen, Trash, X } from 'lucide-react';
+import { Search, SquareLibrary, Library, Menu, Settings, Folder, Home, Heart, Lightbulb, BookOpen, Trash, X } from 'lucide-react';
 import ImportBook from './components/ImportBook';
 import BookCard from './components/BookCard';
 import booksData from './data/books.json'; // Import the JSON file
 
-const Header = ({ toggleSidebar }) => {
+const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
-  
+
   return (
     <header className="flex items-center justify-between p-4 bg-white">
       <div className="flex items-center">
@@ -22,6 +22,8 @@ const Header = ({ toggleSidebar }) => {
             type="text"
             placeholder="Search my library"
             className="w-full py-2 px-4 bg-purple-100 rounded-full text-sm"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
           <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>
@@ -47,7 +49,7 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf }) => (
     </button>
     <nav className="mt-8 lg:mt-0">
       <ul>
-        <li className="mb-2"><button onClick={() => setShelf('books')} className="flex items-center text-purple-600 font-semibold"><Home className="mr-2" /> Books</button></li>
+        <li className="mb-2"><button onClick={() => setShelf('all')} className="flex items-center text-purple-600 font-semibold"><Home className="mr-2" /> Books</button></li>
         <li className="mb-2"><button onClick={() => setShelf('favorites')} className="flex items-center text-gray-600"><Heart className="mr-2" /> Favorites</button></li>
         <li className="mb-2"><button onClick={() => setShelf('notes')} className="flex items-center text-gray-600"><Lightbulb className="mr-2" /> Notes</button></li>
         <li className="mb-2"><button onClick={() => setShelf('highlights')} className="flex items-center text-gray-600"><BookOpen className="mr-2" /> Highlights</button></li>
@@ -55,13 +57,13 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf }) => (
       </ul>
     </nav>
     <div className="mt-8">
-      <h3 className="font-semibold mb-2">Shelf</h3>
+      <h3 className="font-semibold mb-2"><SquareLibrary className="mr-2" />Shelf</h3>
       <ul>
-        <li className="mb-2"><button onClick={() => setShelf('study')} className="text-gray-600">Study</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('work')} className="text-gray-600">Work</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('entertainment')} className="text-gray-600">Entertainment</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('selfHelp')} className="text-gray-600">Self Help</button></li>
-        <li className="mb-2"><button onClick={() => setShelf('blueLock')} className="text-gray-600">Blue Lock</button></li>
+        <li className="mb-2"><button onClick={() => setShelf('study')} className="text-gray-600"><Library className="mr-2" />Study</button></li>
+        <li className="mb-2"><button onClick={() => setShelf('work')} className="text-gray-600"><Library className="mr-2" />Work</button></li>
+        <li className="mb-2"><button onClick={() => setShelf('entertainment')} className="text-gray-600"><Library className="mr-2" />Entertainment</button></li>
+        <li className="mb-2"><button onClick={() => setShelf('selfHelp')} className="text-gray-600"><Library className="mr-2" />Self Help</button></li>
+        <li className="mb-2"><button onClick={() => setShelf('blueLock')} className="text-gray-600"><Library className="mr-2" />Blue Lock</button></li>
       </ul>
     </div>
   </aside>
@@ -80,14 +82,14 @@ const BookGrid = ({ books, toggleFavorite, favorites }) => (
   </div>
 );
 
-const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites }) => {
+const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, searchQuery, setSearchQuery }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
-      <Header toggleSidebar={toggleSidebar} />
+      <Header toggleSidebar={toggleSidebar} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} setShelf={setShelf} />
         <main className="flex-1 overflow-y-auto">
@@ -98,10 +100,13 @@ const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites }) 
   );
 };
 
+
+
 const App = () => {
   const [books, setBooks] = useState(booksData);
   const [favorites, setFavorites] = useState([]);
-  const [currentShelf, setCurrentShelf] = useState('books');
+  const [currentShelf, setCurrentShelf] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const toggleFavorite = (bookId) => {
     setFavorites(prevFavorites => {
@@ -114,10 +119,22 @@ const App = () => {
   };
 
   const getBooksByShelf = (shelf) => {
+    let filteredBooks = books;
+    
     if (shelf === 'favorites') {
-      return books.filter(book => favorites.includes(book.id));
+      filteredBooks = books.filter(book => favorites.includes(book.id));
+    } else if (shelf !== 'all') {
+      filteredBooks = books.filter(book => book.shelf === shelf);
     }
-    return books.filter(book => book.shelf === shelf);
+
+    if (searchQuery) {
+      filteredBooks = filteredBooks.filter(book => 
+        book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    return filteredBooks;
   };
 
   return (
@@ -132,6 +149,8 @@ const App = () => {
               setShelf={setCurrentShelf} 
               currentShelf={currentShelf}
               favorites={favorites}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
             />
           } 
         />
@@ -142,3 +161,4 @@ const App = () => {
 };
 
 export default App;
+
