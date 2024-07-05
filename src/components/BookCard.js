@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart } from 'lucide-react';
+import { BookAIcon } from 'lucide-react';
 
 const BookCard = ({ book, toggleFavorite, isFavorite }) => (
   <div className="bg-white p-4 rounded-lg shadow flex flex-col sm:flex-row h-full relative">
@@ -34,7 +34,7 @@ const BookCard = ({ book, toggleFavorite, isFavorite }) => (
       className="absolute top-4 right-4 text-gray-600"
       onClick={() => toggleFavorite(book.id)}
     >
-      <Heart size={24} className={isFavorite ? 'text-red-500' : 'text-gray-400'} />
+      <BookAIcon size={24} className={isFavorite ? 'text-red-500' : 'text-green-400'} />
     </button>
   </div>
 );
