@@ -1,13 +1,13 @@
 import React from 'react';
-import { BookAIcon } from 'lucide-react';
+import { BookAIcon, Heart } from 'lucide-react';
 
 const BookCard = ({ book, toggleFavorite, isFavorite }) => (
-  <div className="bg-white p-4 rounded-lg shadow flex flex-col sm:flex-row h-full relative">
-    <div className="flex-shrink-0 mb-4 sm:mb-0">
+  <div className="bg-white p-4 rounded-lg shadow flex h-full relative">
+    <div className="flex-shrink-0 mb-4 sm:mb-0 w-24 h-36">
       <img 
         src={book.coverUrl} 
         alt={book.title} 
-        className="w-full sm:w-24 h-36 object-cover rounded mx-auto sm:mx-0"
+        className="w-full h-full object-cover rounded mx-auto sm:mx-0"
         style={{ boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}
       />
     </div>
