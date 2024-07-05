@@ -16,7 +16,7 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
         </button>
         <h1 className="text-2xl font-semibold">Lexicus</h1>
       </div>
-      <div className="flex-1 mx-8 hidden md:block">
+      <div className="flex-1 mx-8">
         <div className="relative">
           <input
             type="text"
@@ -31,12 +31,6 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
       <div className="flex items-center">
         <Settings className="mr-4 text-gray-600 hidden sm:block" />
         <Folder className="mr-4 text-gray-600 hidden sm:block" />
-        <button 
-          className="bg-purple-600 text-white px-4 py-2 rounded-md"
-          onClick={() => navigate('/import')}
-        >
-          Import
-        </button>
       </div>
     </header>
   );
@@ -56,34 +50,7 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf, currentShelf }) => (
             <Home className="mr-2" /> Books
           </button>
         </li>
-        {/* <li className="mb-2">
-          <button 
-            onClick={() => setShelf('favorites')} 
-            className={`flex items-center ${currentShelf === 'favorites' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
-            <Heart className="mr-2" /> Favorites
-          </button>
-        </li>
-        <li className="mb-2">
-          <button 
-            onClick={() => setShelf('notes')} 
-            className={`flex items-center ${currentShelf === 'notes' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
-            <Lightbulb className="mr-2" /> Notes
-          </button>
-        </li>
-        <li className="mb-2">
-          <button 
-            onClick={() => setShelf('highlights')} 
-            className={`flex items-center ${currentShelf === 'highlights' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
-            <BookOpen className="mr-2" /> Highlights
-          </button>
-        </li>
-        <li className="mb-2">
-          <button 
-            onClick={() => setShelf('trash')} 
-            className={`flex items-center ${currentShelf === 'trash' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
-            <Trash className="mr-2" /> Trash
-          </button>
-        </li> */}
+        {/* Add the other shelf buttons similarly */}
       </ul>
     </nav>
     <div className="mt-8">
@@ -129,7 +96,6 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf, currentShelf }) => (
   </aside>
 );
   
-
 const BookGrid = ({ books, toggleFavorite, favorites }) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
     {books.map(book => (
@@ -160,8 +126,6 @@ const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, se
     </div>
   );
 };
-
-
 
 const App = () => {
   const [books, setBooks] = useState(booksData);
@@ -222,5 +186,3 @@ const App = () => {
 };
 
 export default App;
-
-
