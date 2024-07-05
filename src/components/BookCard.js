@@ -15,10 +15,10 @@ const BookCard = ({ book, toggleFavorite, isFavorite }) => (
       <div>
         <h3 className="font-semibold text-lg">{book.title}</h3>
         <p className="text-sm text-gray-600">Author: {book.author}</p>
-        <p className="text-sm text-gray-600">Publisher: {book.publisher}</p>
+        {/* <p className="text-sm text-gray-600">Publisher: {book.publisher}</p> */}
         <p className="text-sm text-gray-600 mt-2 line-clamp-2">{book.description || 'No description available'}</p>
       </div>
-      {book.progress !== undefined && (
+      {/* {book.progress !== undefined && (
         <div className="mt-2">
           <div className="text-xs text-gray-500 mb-1">Progress: {book.progress}%</div>
           <div className="bg-gray-200 rounded-full h-2">
@@ -28,14 +28,14 @@ const BookCard = ({ book, toggleFavorite, isFavorite }) => (
             ></div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
-    <button 
+    {/* <button 
       className="absolute top-4 right-4 text-gray-600"
       onClick={() => toggleFavorite(book.id)}
     >
       <BookAIcon size={24} className={isFavorite ? 'text-red-500' : 'text-green-400'} />
-    </button>
+    </button> */}
   </div>
 );
 

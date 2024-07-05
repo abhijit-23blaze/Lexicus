@@ -42,7 +42,7 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
   );
 };
 
-const Sidebar = ({ isOpen, toggleSidebar, setShelf }) => (
+const Sidebar = ({ isOpen, toggleSidebar, setShelf, currentShelf }) => (
   <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white p-4 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0`}>
     <button onClick={toggleSidebar} className="absolute top-4 right-4 text-gray-600 lg:hidden">
       <X size={24} />
@@ -50,57 +50,77 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf }) => (
     <nav className="mt-8 lg:mt-0">
       <ul>
         <li className="mb-2">
-          <button onClick={() => setShelf('all')} className="flex items-center text-purple-600 font-semibold">
+          <button 
+            onClick={() => setShelf('all')} 
+            className={`flex items-center ${currentShelf === 'all' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
             <Home className="mr-2" /> Books
           </button>
         </li>
-        <li className="mb-2">
-          <button onClick={() => setShelf('favorites')} className="flex items-center text-gray-600">
+        {/* <li className="mb-2">
+          <button 
+            onClick={() => setShelf('favorites')} 
+            className={`flex items-center ${currentShelf === 'favorites' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
             <Heart className="mr-2" /> Favorites
           </button>
         </li>
         <li className="mb-2">
-          <button onClick={() => setShelf('notes')} className="flex items-center text-gray-600">
+          <button 
+            onClick={() => setShelf('notes')} 
+            className={`flex items-center ${currentShelf === 'notes' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
             <Lightbulb className="mr-2" /> Notes
           </button>
         </li>
         <li className="mb-2">
-          <button onClick={() => setShelf('highlights')} className="flex items-center text-gray-600">
+          <button 
+            onClick={() => setShelf('highlights')} 
+            className={`flex items-center ${currentShelf === 'highlights' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
             <BookOpen className="mr-2" /> Highlights
           </button>
         </li>
         <li className="mb-2">
-          <button onClick={() => setShelf('trash')} className="flex items-center text-gray-600">
+          <button 
+            onClick={() => setShelf('trash')} 
+            className={`flex items-center ${currentShelf === 'trash' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
             <Trash className="mr-2" /> Trash
           </button>
-        </li>
+        </li> */}
       </ul>
     </nav>
     <div className="mt-8">
       <h3 className="font-semibold mb-2 flex items-center"><SquareLibrary className="mr-2" /> Shelf</h3>
       <ul>
         <li className="mb-2">
-          <button onClick={() => setShelf('study')} className="flex items-center text-gray-600">
+          <button 
+            onClick={() => setShelf('study')} 
+            className={`flex items-center ${currentShelf === 'study' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
             <Library className="mr-2" /> Study
           </button>
         </li>
         <li className="mb-2">
-          <button onClick={() => setShelf('work')} className="flex items-center text-gray-600">
+          <button 
+            onClick={() => setShelf('work')} 
+            className={`flex items-center ${currentShelf === 'work' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
             <Library className="mr-2" /> Work
           </button>
         </li>
         <li className="mb-2">
-          <button onClick={() => setShelf('entertainment')} className="flex items-center text-gray-600">
+          <button 
+            onClick={() => setShelf('entertainment')} 
+            className={`flex items-center ${currentShelf === 'entertainment' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
             <Library className="mr-2" /> Entertainment
           </button>
         </li>
         <li className="mb-2">
-          <button onClick={() => setShelf('selfHelp')} className="flex items-center text-gray-600">
+          <button 
+            onClick={() => setShelf('selfHelp')} 
+            className={`flex items-center ${currentShelf === 'selfHelp' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
             <Library className="mr-2" /> Self Help
           </button>
         </li>
         <li className="mb-2">
-          <button onClick={() => setShelf('blueLock')} className="flex items-center text-gray-600">
+          <button 
+            onClick={() => setShelf('blueLock')} 
+            className={`flex items-center ${currentShelf === 'blueLock' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
             <Library className="mr-2" /> Blue Lock
           </button>
         </li>
@@ -108,6 +128,7 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf }) => (
     </div>
   </aside>
 );
+  
 
 const BookGrid = ({ books, toggleFavorite, favorites }) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
@@ -131,7 +152,7 @@ const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, se
     <div className="flex flex-col h-screen bg-gray-100">
       <Header toggleSidebar={toggleSidebar} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} setShelf={setShelf} />
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} setShelf={setShelf} currentShelf={currentShelf} />
         <main className="flex-1 overflow-y-auto">
           <BookGrid books={books} toggleFavorite={toggleFavorite} favorites={favorites} />
         </main>
@@ -201,4 +222,5 @@ const App = () => {
 };
 
 export default App;
+
 
