@@ -1,11 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const BookCard = ({ book, toggleFavorite, isFavorite }) => {
-  const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(book.link);
+    window.location.href = book.link;
   };
 
   return (
