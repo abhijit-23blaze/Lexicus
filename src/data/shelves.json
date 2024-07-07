@@ -1,0 +1,33 @@
+[
+    {
+      "id": "all",
+      "name": "All",
+      "icon": "Home"
+    },
+    {
+      "id": "study",
+      "name": "Study",
+      "icon": "Library"
+    },
+    {
+      "id": "work",
+      "name": "Work",
+      "icon": "Library"
+    },
+    {
+      "id": "entertainment",
+      "name": "Entertainment",
+      "icon": "Library"
+    },
+    {
+      "id": "selfHelp",
+      "name": "Self Help",
+      "icon": "Library"
+    },
+    {
+      "id": "blueLock",
+      "name": "Blue Lock",
+      "icon": "Library"
+    }
+  ]
+  
