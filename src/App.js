@@ -4,9 +4,19 @@ import { Search, SquareLibrary, Library, Menu, Settings, Folder, Home, X } from 
 import ImportBook from './components/ImportBook';
 import BookCard from './components/BookCard';
 import booksData from './data/books.json'; // Import the JSON file
+import SignIn from '.components/SignIn';
+import { auth } from './firebase'; // Adjust the import path  
 
 const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <header className="flex items-center justify-between p-4 bg-white">
@@ -16,7 +26,7 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
         </button>
         <h1 className="text-2xl font-semibold">Lexicus</h1>
       </div>
-      <div className="flex-1 mx-8">
+      <div className="flex-1 mx-8 hidden md:block">
         <div className="relative">
           <input
             type="text"
@@ -31,10 +41,23 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
       <div className="flex items-center">
         <Settings className="mr-4 text-gray-600 hidden sm:block" />
         <Folder className="mr-4 text-gray-600 hidden sm:block" />
+        {user ? (
+          <button className="text-gray-600" onClick={() => auth.signOut()}>
+            Logout
+          </button>
+        ) : (
+          <button 
+            className="text-gray-600" 
+            onClick={() => navigate('/signin')}
+          >
+            Login
+          </button>
+        )}
       </div>
     </header>
   );
 };
+
 
 const Sidebar = ({ isOpen, toggleSidebar, setShelf, currentShelf }) => (
   <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white p-4 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0`}>
@@ -132,6 +155,14 @@ const App = () => {
   const [favorites, setFavorites] = useState([]);
   const [currentShelf, setCurrentShelf] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const toggleFavorite = (bookId) => {
     setFavorites(prevFavorites => {
@@ -145,7 +176,7 @@ const App = () => {
 
   const getBooksByShelf = (shelf) => {
     let filteredBooks = books;
-    
+
     if (shelf === 'favorites') {
       filteredBooks = books.filter(book => favorites.includes(book.id));
     } else if (shelf !== 'all') {
@@ -153,7 +184,7 @@ const App = () => {
     }
 
     if (searchQuery) {
-      filteredBooks = filteredBooks.filter(book => 
+      filteredBooks = filteredBooks.filter(book =>
         book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         book.author.toLowerCase().includes(searchQuery.toLowerCase())
       );
@@ -165,27 +196,32 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route 
-          path="/" 
+        <Route
+          path="/"
           element={
-            <HomePage 
-              books={getBooksByShelf(currentShelf)} 
-              toggleFavorite={toggleFavorite} 
-              setShelf={setCurrentShelf} 
-              currentShelf={currentShelf}
-              favorites={favorites}
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-            />
-          } 
+            user ? (
+              <HomePage
+                books={getBooksByShelf(currentShelf)}
+                toggleFavorite={toggleFavorite}
+                setShelf={setCurrentShelf}
+                currentShelf={currentShelf}
+                favorites={favorites}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+              />
+            ) : (
+              <SignIn />
+            )
+          }
         />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/import" element={<ImportBook />} />
         {/* Add routes for each book link */}
         {books.map(book => (
-          <Route 
-            key={book.id} 
-            path={book.link} 
-            element={<BookDetails book={book} />} 
+          <Route
+            key={book.id}
+            path={book.link}
+            element={<BookDetails book={book} />}
           />
         ))}
       </Routes>
