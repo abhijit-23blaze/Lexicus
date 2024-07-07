@@ -7,7 +7,12 @@ const SignIn = () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       console.log(result.user);
-      window.location.href = '/';
+      // Redirect to profile setup if user doesn't have a username
+      if (!result.user.displayName) {
+        window.location.href = '/profile-setup';
+      } else {
+        window.location.href = '/';
+      }
     } catch (error) {
       console.error(error);
     }

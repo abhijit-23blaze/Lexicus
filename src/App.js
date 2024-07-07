@@ -8,6 +8,7 @@ import SignIn from './components/SignIn';
 import Profile from './components/Profile'; // Import the Profile component
 import { auth } from './firebase'; // Import auth from firebase
 import shelvesData from './data/shelves.json'; // Adjust the path if necessary
+import ProfileSetup from './components/ProfileSetup';
 
 const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
@@ -161,6 +162,7 @@ const App = () => {
         />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/profile-setup" element={<ProfileSetup />} />
       </Routes>
     </Router>
   );
