@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { Search, SquareLibrary, Library, Menu, Settings, Folder, Home, X } from 'lucide-react';
 import ImportBook from './components/ImportBook';
 import BookCard from './components/BookCard';
 import booksData from './data/books.json'; // Import the JSON file
-import SignIn from '.components/SignIn';
+import SignIn from './components/SignIn';
 import { auth } from './firebase'; // Adjust the import path  
 
 const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
 
   return (
     <header className="flex items-center justify-between p-4 bg-white">
@@ -26,7 +19,7 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
         </button>
         <h1 className="text-2xl font-semibold">Lexicus</h1>
       </div>
-      <div className="flex-1 mx-8 hidden md:block">
+      <div className="flex-1 mx-8">
         <div className="relative">
           <input
             type="text"
@@ -41,18 +34,12 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
       <div className="flex items-center">
         <Settings className="mr-4 text-gray-600 hidden sm:block" />
         <Folder className="mr-4 text-gray-600 hidden sm:block" />
-        {user ? (
-          <button className="text-gray-600" onClick={() => auth.signOut()}>
-            Logout
-          </button>
-        ) : (
-          <button 
-            className="text-gray-600" 
-            onClick={() => navigate('/signin')}
-          >
-            Login
-          </button>
-        )}
+        <button 
+          className="text-gray-600"
+          onClick={() => navigate('/signin')}
+        >
+          <User size={24} />
+        </button>
       </div>
     </header>
   );

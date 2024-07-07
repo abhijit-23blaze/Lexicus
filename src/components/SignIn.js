@@ -1,10 +1,11 @@
 import React from 'react';
 import { auth, googleProvider } from '../firebase'; // Adjust the import path
+import { signInWithPopup } from 'firebase/auth';
 
 const SignIn = () => {
   const signInWithGoogle = async () => {
     try {
-      const result = await auth.signInWithPopup(googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
       console.log(result.user);
       window.location.href = '/';
     } catch (error) {
