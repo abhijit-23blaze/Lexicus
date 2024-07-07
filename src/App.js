@@ -50,7 +50,7 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf, currentShelf }) => (
     </button>
     <nav className="mt-8 lg:mt-0">
       <ul>
-        {shelves.map(shelf => (
+        {shelvesData.map(shelf => (
           <li className="mb-2" key={shelf.id}>
             <button 
               onClick={() => setShelf(shelf.id)} 
