@@ -1,41 +1,54 @@
 import React, { useState } from 'react';
-import { auth } from '../firebase'; // Adjust the import path
+import { auth, firestore } from '../firebase';
+import { updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 const ProfileSetup = () => {
   const [username, setUsername] = useState('');
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
+  const [error, setError] = useState('');
 
   const handleProfileSetup = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      setError('No user is signed in.');
+      return;
+    }
+
     try {
-      await auth.currentUser.updateProfile({
-        displayName: username,
+      // Update the user's profile
+      await updateProfile(user, { displayName: username });
+      
+      // Save the username to Firestore
+      await setDoc(doc(firestore, 'users', user.uid), {
+        username,
+        email: user.email,
+        displayName: user.displayName,
       });
-      // Redirect to home page or another relevant page after setup
-      window.location.href = '/';
+
+      window.location.href = '/profile';
     } catch (error) {
-      console.error(error);
+      console.error('Error updating profile:', error);
+      setError('Error updating profile.');
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500 text-white">
-      <div className="bg-white text-black p-8 rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold mb-6 text-center">Profile Setup</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-6">Set Up Profile</h1>
         <input
           type="text"
-          className="w-full py-2 px-4 mb-4 bg-purple-100 rounded-full text-sm"
-          placeholder="Enter your username"
+          placeholder="Username"
           value={username}
-          onChange={handleUsernameChange}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full px-4 py-2 mb-4 border rounded-lg"
         />
+        {error && <p className="text-red-500">{error}</p>}
         <button
-          className="bg-red-500 text-white px-6 py-3 rounded-lg shadow hover:bg-red-600 transition duration-300"
           onClick={handleProfileSetup}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
         >
-          Set Username
+          Save
         </button>
       </div>
     </div>
