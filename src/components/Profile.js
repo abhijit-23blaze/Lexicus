@@ -1,12 +1,13 @@
-// src/components/Profile.js
 import React, { useState, useEffect } from 'react';
 import { auth, firestore } from '../firebase';
-import { doc, getDoc } from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
+import { doc, getDoc, updateDoc, query, where, getDocs, collection } from 'firebase/firestore';
+import { signOut, updateProfile } from 'firebase/auth';
 
 const Profile = () => {
   const [username, setUsername] = useState('');
+  const [newUsername, setNewUsername] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const user = auth.currentUser;
 
@@ -27,6 +28,45 @@ const Profile = () => {
 
     fetchUsername();
   }, [user]);
+
+  const isUsernameUnique = async (username) => {
+    const q = query(collection(firestore, 'users'), where('username', '==', username));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.empty;
+  };
+
+  const handleChangeUsername = async () => {
+    setError('');
+    setSuccess('');
+    if (!newUsername) {
+      setError('Username cannot be empty.');
+      return;
+    }
+
+    try {
+      const unique = await isUsernameUnique(newUsername);
+      if (!unique) {
+        setError('Username already taken.');
+        return;
+      }
+
+      // Update the user's profile in Firebase Authentication
+      await updateProfile(user, { displayName: newUsername });
+
+      // Update the user's profile in Firestore
+      await updateDoc(doc(firestore, 'users', user.uid), {
+        username: newUsername,
+        displayName: newUsername,
+      });
+
+      setUsername(newUsername);
+      setSuccess('Username updated successfully.');
+      setNewUsername('');
+    } catch (error) {
+      console.error('Error updating username:', error);
+      setError('Error updating username.');
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -54,11 +94,28 @@ const Profile = () => {
       <div className="bg-white p-8 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-6">Profile</h1>
         {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="text-green-500">{success}</p>}
         <p className="mb-4"><strong>Name:</strong> {user.displayName}</p>
         <p className="mb-4"><strong>Email:</strong> {user.email}</p>
         <p className="mb-4"><strong>Username:</strong> {username}</p>
         <img src={user.photoURL} alt="Profile" className="w-32 h-32 rounded-full mb-4" />
-        <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-lg">
+        <input
+          type="text"
+          placeholder="New Username"
+          value={newUsername}
+          onChange={(e) => setNewUsername(e.target.value)}
+          className="w-full px-4 py-2 mb-4 border rounded-lg"
+        />
+        <button
+          onClick={handleChangeUsername}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg mb-4"
+        >
+          Change Username
+        </button>
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 rounded-lg"
+        >
           Logout
         </button>
       </div>

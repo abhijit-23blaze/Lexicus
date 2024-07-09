@@ -38,7 +38,7 @@ const ProfileSetup = () => {
         displayName: username,
       });
 
-      window.location.href = '/profile';
+      window.location.href = '/';
     } catch (error) {
       console.error('Error updating profile:', error);
       setError('Error updating profile.');
