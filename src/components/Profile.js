@@ -1,3 +1,4 @@
+// src/components/Profile.js
 import React, { useEffect, useState } from 'react';
 import { auth, firestore } from '../firebase';
 import { signOut } from 'firebase/auth';

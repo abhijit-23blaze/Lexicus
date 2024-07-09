@@ -1,3 +1,4 @@
+// src/components/ProfileSetup.js
 import React, { useState } from 'react';
 import { auth, firestore } from '../firebase';
 import { updateProfile } from 'firebase/auth';
