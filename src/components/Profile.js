@@ -1,191 +1,88 @@
-// Profile.js
 import React, { useState, useEffect } from 'react';
-import { auth, firestore } from '../firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { signOut, updateProfile } from 'firebase/auth';
+import { auth, firestore } from '../firebase'; // Adjust import paths as per your project setup
 
 const Profile = () => {
-  const [bio, setBio] = useState('');
-  const [genres, setGenres] = useState([]);
-  const [editing, setEditing] = useState(false);
-  const [newBio, setNewBio] = useState('');
-  const [newGenres, setNewGenres] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-
-  const user = auth.currentUser;
+  const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      if (user) {
-        try {
-          const profileDoc = await getDoc(doc(firestore, 'profiles', user.uid));
-          if (profileDoc.exists()) {
-            const data = profileDoc.data();
-            setBio(data.bio || '');
-            setGenres(data.genres || []);
-          }
-        } catch (error) {
-          console.error('Error fetching profile:', error);
-          setError('Error fetching profile.');
+    const fetchUserProfile = async () => {
+      const userId = auth.currentUser.uid;
+      try {
+        const userDoc = await firestore.collection('users').doc(userId).get();
+        if (userDoc.exists) {
+          setUserProfile(userDoc.data());
+        } else {
+          console.log('User profile not found');
         }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
       }
     };
 
-    fetchProfileData();
-  }, [user]);
+    fetchUserProfile();
+  }, []);
 
-  const handleSaveChanges = async () => {
-    setError('');
-    setSuccess('');
+  const handleUpdateProfile = async () => {
+    const userId = auth.currentUser.uid;
 
     try {
-      // Update bio and genres in Firestore
-      await updateDoc(doc(firestore, 'profiles', user.uid), {
-        bio: newBio,
-        genres: newGenres.split(',').map((genre) => genre.trim()),
+      await firestore.collection('users').doc(userId).update({
+        displayName: 'Updated Display Name', // Example: Replace with updated display name
+        bio: 'Updated bio', // Example: Replace with updated bio text
+        genres: ['Updated Genre'] // Example: Replace with updated genres array
       });
-
-      // Update bio in Firebase Authentication
-      await updateProfile(user, { displayName: newBio });
-
-      setBio(newBio);
-      setGenres(newGenres.split(',').map((genre) => genre.trim()));
-      setEditing(false);
-      setSuccess('Profile updated successfully.');
+      console.log('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error);
-      setError('Error updating profile.');
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      window.location.href = '/signin';
-    } catch (error) {
-      console.error('Error signing out:', error);
-      setError('Error signing out.');
-    }
-  };
-
-  if (!user) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl mb-4">You are not logged in</h1>
-        <a href="/signin" className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-          Sign In
-        </a>
-      </div>
-    );
+  if (!userProfile) {
+    return <div>Loading...</div>; // Handle loading state if needed
   }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <div className="flex justify-end mb-4 space-x-2">
-        <button
-          onClick={() => setEditing(true)}
-          className="bg-tahiti hover:bg-tahiti-600 text-black font-bold py-2 px-4 rounded"
-        >
-          <i className="fas fa-edit mr-2"></i>Edit Profile
-        </button>
-        <button
-          onClick={handleLogout}
-          className="bg-tahiti hover:bg-tahiti-600 text-black font-bold py-2 px-4 rounded"
-        >
-          <i className="fas fa-sign-out-alt mr-2"></i>Logout
-        </button>
-      </div>
-
-      <div className="bg-black bg-opacity-30 rounded-lg p-6 backdrop-blur-sm mb-8">
-        <div className="flex flex-col md:flex-row items-center md:items-start">
+      <h1 className="text-3xl font-bold mb-4">Your Profile</h1>
+      <div className="bg-white p-8 rounded-lg shadow-lg">
+        <div className="flex items-center mb-4">
           <img
-            src="/api/placeholder/150/150"
-            alt="Author Profile"
-            className="w-32 h-32 rounded-full mb-4 md:mb-0 md:mr-8 border-4 border-tahiti"
+            src={userProfile.photoURL || 'https://via.placeholder.com/150'}
+            alt="Profile"
+            className="w-20 h-20 rounded-full mr-4"
           />
-          <div className="flex-grow text-center md:text-left">
-            <h2 className="font-bold text-2xl mb-2">{user.displayName}</h2>
-            <div className="flex justify-center md:justify-start space-x-4 mb-4">
-              <div className="text-center">
-                <span className="font-bold block text-tahiti">5</span>
-                <span className="text-sm">books</span>
-              </div>
-              <div className="text-center">
-                <span className="font-bold block text-tahiti">10.5K</span>
-                <span className="text-sm">readers</span>
-              </div>
-            </div>
-            <p className="text-sm mb-2">{editing ? (
-              <textarea
-                rows="4"
-                value={newBio}
-                onChange={(e) => setNewBio(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg"
-                placeholder="Tell us about yourself..."
-              ></textarea>
-            ) : bio}</p>
-            <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-2">
-              {genres.map((genre, index) => (
-                <span key={index} className="bg-midnight bg-opacity-50 text-tahiti text-xs font-semibold px-3 py-1 rounded-full">
-                  {genre}
-                </span>
-              ))}
-              {editing && (
-                <input
-                  type="text"
-                  value={newGenres}
-                  onChange={(e) => setNewGenres(e.target.value)}
-                  className="bg-transparent text-white text-xs font-semibold px-3 py-1 rounded-full"
-                  placeholder="Add Genre"
-                />
-              )}
-              {editing && (
-                <button
-                  onClick={() => {
-                    setGenres([...genres, newGenres.trim()]);
-                    setNewGenres('');
-                  }}
-                  className="bg-tahiti text-white text-xs font-semibold px-3 py-1 rounded-full hover:bg-tahiti-600"
-                >
-                  <i className="fas fa-plus mr-1"></i>Add Genre
-                </button>
-              )}
-            </div>
+          <div>
+            <h2 className="text-2xl font-bold">{userProfile.displayName}</h2>
+            <p className="text-gray-600">{userProfile.email}</p>
           </div>
         </div>
-      </div>
 
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold">Your Books</h3>
-          <button className="bg-tahiti hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded">
-            <i className="fas fa-plus mr-2"></i>Add New Book
-          </button>
+        <div className="mb-4">
+          <h3 className="text-lg font-bold mb-2">Bio</h3>
+          <p>{userProfile.bio || 'No bio provided'}</p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="relative group">
-            <img
-              src="/api/placeholder/300/400"
-              alt="Book Cover"
-              className="w-full aspect-[3/4] object-cover rounded-lg shadow-lg transition duration-300 group-hover:opacity-75"
-            />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-              <button className="bg-tahiti text-white px-3 py-1 rounded-full text-sm">Edit Book</button>
-            </div>
-          </div>
-          {/* Repeat for other books */}
-        </div>
-      </div>
 
-      {editing && (
+        <div>
+          <h3 className="text-lg font-bold mb-2">Genres</h3>
+          <ul className="flex flex-wrap gap-2">
+            {userProfile.genres && userProfile.genres.map((genre, index) => (
+              <li
+                key={index}
+                className="bg-gray-200 px-2 py-1 rounded-full text-sm"
+              >
+                {genre}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <button
-          onClick={handleSaveChanges}
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+          className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-600 transition duration-300"
+          onClick={handleUpdateProfile}
         >
-          Save Changes
+          Update Profile
         </button>
-      )}
+      </div>
     </div>
   );
 };
