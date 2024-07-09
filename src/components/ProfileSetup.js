@@ -2,11 +2,17 @@
 import React, { useState } from 'react';
 import { auth, firestore } from '../firebase';
 import { updateProfile } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDocs, query, collection, where } from 'firebase/firestore';
 
 const ProfileSetup = () => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
+
+  const isUsernameUnique = async (username) => {
+    const q = query(collection(firestore, 'users'), where('username', '==', username));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.empty;
+  };
 
   const handleProfileSetup = async () => {
     const user = auth.currentUser;
@@ -16,14 +22,20 @@ const ProfileSetup = () => {
     }
 
     try {
+      const unique = await isUsernameUnique(username);
+      if (!unique) {
+        setError('Username already taken.');
+        return;
+      }
+
       // Update the user's profile
       await updateProfile(user, { displayName: username });
-      
+
       // Save the username to Firestore
       await setDoc(doc(firestore, 'users', user.uid), {
         username,
         email: user.email,
-        displayName: user.displayName,
+        displayName: username,
       });
 
       window.location.href = '/profile';
