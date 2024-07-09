@@ -1,44 +1,39 @@
-// src/components/ProfileSetup.js
+// ProfileSetup.js
 import React, { useState } from 'react';
 import { auth, firestore } from '../firebase';
-import { updateProfile } from 'firebase/auth';
-import { doc, setDoc, getDocs, query, collection, where } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 
 const ProfileSetup = () => {
-  const [username, setUsername] = useState('');
+  const [bio, setBio] = useState('');
+  const [genres, setGenres] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const isUsernameUnique = async (username) => {
-    const q = query(collection(firestore, 'users'), where('username', '==', username));
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.empty;
-  };
+  const user = auth.currentUser;
 
   const handleProfileSetup = async () => {
-    const user = auth.currentUser;
+    setError('');
+    setSuccess('');
+
     if (!user) {
-      setError('No user is signed in.');
+      setError('User not authenticated.');
       return;
     }
 
     try {
-      const unique = await isUsernameUnique(username);
-      if (!unique) {
-        setError('Username already taken.');
-        return;
-      }
+      // Store bio and genres in Firestore
+      const profileData = {
+        bio,
+        genres: genres.split(',').map((genre) => genre.trim()),
+      };
 
-      // Update the user's profile
-      await updateProfile(user, { displayName: username });
-
-      // Save the username to Firestore
-      await setDoc(doc(firestore, 'users', user.uid), {
-        username,
-        email: user.email,
-        displayName: username,
+      const docRef = await addDoc(collection(firestore, 'profiles'), {
+        userId: user.uid,
+        ...profileData,
       });
 
-      window.location.href = '/';
+      console.log('Document written with ID: ', docRef.id);
+      setSuccess('Profile setup completed successfully.');
     } catch (error) {
       console.error('Error updating profile:', error);
       setError('Error updating profile.');
@@ -46,24 +41,36 @@ const ProfileSetup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-6">Set Up Profile</h1>
+    <div className="container mx-auto px-4 py-8 max-w-3xl">
+      <h2 className="text-3xl font-bold mb-4">Setup Your Profile</h2>
+      {error && <p className="text-red-500">{error}</p>}
+      {success && <p className="text-green-500">{success}</p>}
+      <div className="mb-4">
+        <label className="block text-sm font-semibold mb-1">Bio</label>
+        <textarea
+          rows="4"
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+          className="w-full px-4 py-2 border rounded-lg"
+          placeholder="Tell us about yourself..."
+        ></textarea>
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-semibold mb-1">Genres (comma-separated)</label>
         <input
           type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="w-full px-4 py-2 mb-4 border rounded-lg"
+          value={genres}
+          onChange={(e) => setGenres(e.target.value)}
+          className="w-full px-4 py-2 border rounded-lg"
+          placeholder="e.g., Mystery, Thriller, Crime Fiction"
         />
-        {error && <p className="text-red-500">{error}</p>}
-        <button
-          onClick={handleProfileSetup}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-        >
-          Save
-        </button>
       </div>
+      <button
+        onClick={handleProfileSetup}
+        className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+      >
+        Save Profile
+      </button>
     </div>
   );
 };
