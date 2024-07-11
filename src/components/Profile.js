@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { auth, firestore } from '../firebase'; // Adjust import paths as per your project setup
+import { auth, firestore } from '../firebase';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
+  const [newUsername, setNewUsername] = useState('');
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       const userId = auth.currentUser.uid;
       try {
-        const userDoc = await firestore.collection('users').doc(userId).get();
-        if (userDoc.exists) {
+        const userDoc = await getDoc(doc(firestore, 'users', userId));
+        if (userDoc.exists()) {
           setUserProfile(userDoc.data());
         } else {
           console.log('User profile not found');
@@ -22,19 +24,21 @@ const Profile = () => {
     fetchUserProfile();
   }, []);
 
-  const handleUpdateProfile = async () => {
+  const handleChangeUsername = async () => {
     const userId = auth.currentUser.uid;
-
     try {
-      await firestore.collection('users').doc(userId).update({
-        displayName: 'Updated Display Name', // Example: Replace with updated display name
-        bio: 'Updated bio', // Example: Replace with updated bio text
-        genres: ['Updated Genre'] // Example: Replace with updated genres array
-      });
-      console.log('Profile updated successfully!');
+      await updateDoc(doc(firestore, 'users', userId), { username: newUsername });
+      setUserProfile(prevProfile => ({ ...prevProfile, username: newUsername }));
+      console.log('Username updated successfully');
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error('Error updating username:', error);
     }
+  };
+
+  const handleLogout = () => {
+    auth.signOut().then(() => {
+      window.location.href = '/signin';
+    });
   };
 
   if (!userProfile) {
@@ -43,44 +47,67 @@ const Profile = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <h1 className="text-3xl font-bold mb-4">Your Profile</h1>
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <div className="flex items-center mb-4">
+      <div className="flex justify-end mb-4 space-x-2">
+        <button
+          className="bg-tahiti hover:bg-tahiti-600 text-black font-bold py-2 px-4 rounded"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
+      <div className="bg-black bg-opacity-30 rounded-lg p-6 backdrop-blur-sm mb-8">
+        <div className="flex flex-col md:flex-row items-center md:items-start">
           <img
-            src={userProfile.photoURL || 'https://via.placeholder.com/150'}
-            alt="Profile"
-            className="w-20 h-20 rounded-full mr-4"
+            src={auth.currentUser.photoURL || "/api/placeholder/150/150"}
+            alt="Author Profile"
+            className="w-32 h-32 rounded-full mb-4 md:mb-0 md:mr-8 border-4 border-tahiti"
           />
-          <div>
-            <h2 className="text-2xl font-bold">{userProfile.displayName}</h2>
-            <p className="text-gray-600">{userProfile.email}</p>
+          <div className="flex-grow text-center md:text-left">
+            <h2 className="font-bold text-2xl mb-2">{userProfile.name || 'Name not set'}</h2>
+            <div className="flex justify-center md:justify-start space-x-4 mb-4">
+              <div className="text-center">
+                <span className="font-bold block text-tahiti">{userProfile.booksCount || 0}</span>
+                <span className="text-sm">books</span>
+              </div>
+              <div className="text-center">
+                <span className="font-bold block text-tahiti">{userProfile.readersCount || 0}</span>
+                <span className="text-sm">readers</span>
+              </div>
+            </div>
+            <p className="text-sm mb-2">{userProfile.bio || 'Bio not set'}</p>
+            <p className="text-sm italic mb-4">"Writing stories that keep you up all night"</p>
+            <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-2">
+              {userProfile.genres && userProfile.genres.map((genre, index) => (
+                <span key={index} className="bg-midnight bg-opacity-50 text-tahiti text-xs font-semibold px-3 py-1 rounded-full">{genre}</span>
+              ))}
+            </div>
           </div>
         </div>
-
-        <div className="mb-4">
-          <h3 className="text-lg font-bold mb-2">Bio</h3>
-          <p>{userProfile.bio || 'No bio provided'}</p>
+      </div>
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold">Your Books</h3>
+          <button className="bg-tahiti hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded">
+            <i className="fas fa-plus mr-2"></i>Add New Book
+          </button>
         </div>
-
-        <div>
-          <h3 className="text-lg font-bold mb-2">Genres</h3>
-          <ul className="flex flex-wrap gap-2">
-            {userProfile.genres && userProfile.genres.map((genre, index) => (
-              <li
-                key={index}
-                className="bg-gray-200 px-2 py-1 rounded-full text-sm"
-              >
-                {genre}
-              </li>
-            ))}
-          </ul>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {/* Add book rendering logic here */}
         </div>
-
+      </div>
+      <div className="flex flex-col items-center justify-center">
+        <input
+          type="text"
+          placeholder="New Username"
+          value={newUsername}
+          onChange={(e) => setNewUsername(e.target.value)}
+          className="mb-4 px-4 py-2 border rounded"
+        />
         <button
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-600 transition duration-300"
-          onClick={handleUpdateProfile}
+          onClick={handleChangeUsername}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
         >
-          Update Profile
+          Change Username
         </button>
       </div>
     </div>
