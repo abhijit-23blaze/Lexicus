@@ -1,67 +1,58 @@
-import React, { useState } from 'react';
-import { auth, firestore } from '../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { useState } from 'react';
+import { db, auth } from '../firebase'; // Adjust import paths as per your project setup
 
 const ProfileSetup = () => {
-  const [name, setName] = useState('');
   const [bio, setBio] = useState('');
   const [genres, setGenres] = useState('');
-  const [username, setUsername] = useState('');
 
   const handleProfileSetup = async () => {
     const userId = auth.currentUser.uid;
 
     try {
-      await auth.currentUser.updateProfile({ displayName: name });
-      await setDoc(doc(firestore, 'users', userId), {
-        name,
-        bio,
+      await db.collection('users').doc(userId).set({
+        bio: bio,
         genres: genres.split(',').map(genre => genre.trim()),
-        username,
-      });
-      console.log('Profile updated successfully');
+      }, { merge: true }); // Using merge: true to update existing fields without overwriting
+
+      console.log('Profile updated successfully!');
+      // Redirect or handle success as needed
     } catch (error) {
       console.error('Error updating profile:', error);
+      // Handle error
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl mb-4">Profile Setup</h1>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="mb-4 px-4 py-2 border rounded"
-      />
-      <input
-        type="text"
-        placeholder="Bio"
-        value={bio}
-        onChange={(e) => setBio(e.target.value)}
-        className="mb-4 px-4 py-2 border rounded"
-      />
-      <input
-        type="text"
-        placeholder="Genres (comma separated)"
-        value={genres}
-        onChange={(e) => setGenres(e.target.value)}
-        className="mb-4 px-4 py-2 border rounded"
-      />
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="mb-4 px-4 py-2 border rounded"
-      />
-      <button
-        onClick={handleProfileSetup}
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-      >
-        Save Profile
-      </button>
+    <div className="container mx-auto px-4 py-8 max-w-3xl">
+      <h1 className="text-3xl font-bold mb-4">Profile Setup</h1>
+      <div className="bg-white p-8 rounded-lg shadow-lg">
+        <label className="block mb-2">
+          Bio
+          <textarea
+            className="form-textarea mt-1 block w-full"
+            rows="4"
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+          ></textarea>
+        </label>
+
+        <label className="block mb-2 mt-4">
+          Genres (comma-separated)
+          <input
+            type="text"
+            className="form-input mt-1 block w-full"
+            value={genres}
+            onChange={(e) => setGenres(e.target.value)}
+          />
+        </label>
+
+        <button
+          className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-600 transition duration-300"
+          onClick={handleProfileSetup}
+        >
+          Save Profile
+        </button>
+      </div>
     </div>
   );
 };
