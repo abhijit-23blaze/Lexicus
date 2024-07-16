@@ -1,15 +1,32 @@
-// ProfileSetup.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, firestore } from '../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 const ProfileSetup = () => {
   const [bio, setBio] = useState('');
   const [genres, setGenres] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-
+  const [loading, setLoading] = useState(true);
   const user = auth.currentUser;
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      if (user) {
+        const docRef = doc(firestore, 'profiles', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setBio(data.bio);
+          setGenres(data.genres.join(', '));
+        }
+      }
+      setLoading(false);
+    };
+
+    fetchProfileData();
+  }, [user]);
 
   const handleProfileSetup = async () => {
     setError('');
@@ -21,24 +38,23 @@ const ProfileSetup = () => {
     }
 
     try {
-      // Store bio and genres in Firestore
       const profileData = {
         bio,
         genres: genres.split(',').map((genre) => genre.trim()),
       };
 
-      const docRef = await addDoc(collection(firestore, 'profiles'), {
-        userId: user.uid,
-        ...profileData,
-      });
+      await setDoc(doc(firestore, 'profiles', user.uid), profileData);
 
-      console.log('Document written with ID: ', docRef.id);
       setSuccess('Profile setup completed successfully.');
     } catch (error) {
       console.error('Error updating profile:', error);
       setError('Error updating profile.');
     }
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
