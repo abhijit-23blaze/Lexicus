@@ -159,9 +159,9 @@ const Profile = () => {
       <div className="mb-8">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-bold">Your Books</h3>
-          {/* <button className="bg-tahiti hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-tahiti hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded">
             <i className="fas fa-plus mr-2"></i>Add New Book
-          </button> */}
+          </button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div className="relative group">
