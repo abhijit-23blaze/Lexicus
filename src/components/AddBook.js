@@ -1,10 +1,11 @@
-// components/AddBook.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
-import { BlobServiceClient } from '@azure/storage-blob'; // Import Azure Blob Service Client
+import { BlobServiceClient } from '@azure/storage-blob';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, firestore } from './firebaseConfig'; // Ensure this import is correct
 
-const AZURE_STORAGE_CONNECTION_STRING = 'your-azure-connection-string'; // Replace with your Azure connection string
+const AZURE_STORAGE_CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=lexicus;AccountKey=oX+FMXctw0yCbjk6TNfCRpIrZ3mUz/zLe350thDo9U4MtMIDFwcsb2nDA1UOWQUauS1WWooA6Sm/+AStni7X/A==;EndpointSuffix=core.windows.net'; // Replace with your Azure connection string
+
 
 const AddBook = () => {
   const [bookName, setBookName] = useState('');
@@ -13,6 +14,7 @@ const AddBook = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
@@ -21,30 +23,42 @@ const AddBook = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
+    setIsLoading(true);
+
     const user = auth.currentUser;
 
     if (!user) {
       setError('User is not logged in.');
+      setIsLoading(false);
       return;
     }
 
     if (!pdfFile) {
       setError('No file selected.');
+      setIsLoading(false);
       return;
     }
 
     try {
+      if (!AZURE_STORAGE_CONNECTION_STRING) {
+        throw new Error('Azure Storage connection string is not configured.');
+      }
+
       const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
-      const containerClient = blobServiceClient.getContainerClient('your-container-name'); // Replace with your container name
-      const blobName = `${Date.now()}-${pdfFile.name}`;
+      const containerClient = blobServiceClient.getContainerClient('$web'); // Replace with your container name
+      const blobName = `external/pdf/web/PDFs/${Date.now()}-${pdfFile.name}`;
       const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
+      // Upload file to Azure Blob Storage
       await blockBlobClient.uploadData(pdfFile, {
         blobHTTPHeaders: { blobContentType: pdfFile.type },
       });
 
-      // Optionally, store book details in Firestore
-      await setDoc(doc(collection(firestore, 'books'), bookId), {
+      // Store book details in Firestore
+      const bookId = Date.now().toString();
+      await setDoc(doc(firestore, 'books', bookId), {
         name: bookName,
         genre,
         description,
@@ -53,59 +67,65 @@ const AddBook = () => {
       });
 
       setSuccess('Book uploaded successfully.');
-      navigate('/'); // Redirect to main page
+      setTimeout(() => navigate('/'), 2000); // Redirect after 2 seconds
     } catch (error) {
       console.error('Error uploading book:', error);
-      setError('Error uploading book.');
+      setError(`Error uploading book: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-2xl mb-4">Add a New Book</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl mb-4 font-bold">Add a New Book</h2>
         <div className="mb-4">
-          <label className="block text-gray-700">Book Name</label>
+          <label className="block text-gray-700 mb-2">Book Name</label>
           <input
             type="text"
             value={bookName}
             onChange={(e) => setBookName(e.target.value)}
-            className="w-full px-4 py-2 mt-2 border rounded-lg"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Genre</label>
+          <label className="block text-gray-700 mb-2">Genre</label>
           <input
             type="text"
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
-            className="w-full px-4 py-2 mt-2 border rounded-lg"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Description</label>
+          <label className="block text-gray-700 mb-2">Description</label>
           <textarea
             rows="4"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-4 py-2 mt-2 border rounded-lg"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           ></textarea>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">PDF File</label>
+          <label className="block text-gray-700 mb-2">PDF File</label>
           <input
             type="file"
             accept=".pdf"
             onChange={handleFileChange}
-            className="w-full px-4 py-2 mt-2 border rounded-lg"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg">
-          Upload Book
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+          disabled={isLoading}
+        >
+          {isLoading ? 'Uploading...' : 'Upload Book'}
         </button>
         {error && <p className="text-red-500 mt-4">{error}</p>}
         {success && <p className="text-green-500 mt-4">{success}</p>}

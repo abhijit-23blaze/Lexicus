@@ -179,7 +179,7 @@ const Profile = () => {
           <h3 className="text-xl font-bold">Your Books</h3>
           <button
             onClick={() => navigate('/add-book')} // Navigate to add book form
-            className="bg-tahiti hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded"
+            className="bg-blue hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded"
           >
             <i className="fas fa-plus mr-2"></i>New Book
           </button>
