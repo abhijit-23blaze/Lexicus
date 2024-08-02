@@ -1,13 +1,14 @@
-// Profile.js
 import React, { useState, useEffect } from 'react';
 import { auth, firestore } from '../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { signOut, updateProfile } from 'firebase/auth';
 
 const Profile = () => {
+  const [authorName, setAuthorName] = useState('');
   const [bio, setBio] = useState('');
   const [genres, setGenres] = useState([]);
   const [editing, setEditing] = useState(false);
+  const [newAuthorName, setNewAuthorName] = useState('');
   const [newBio, setNewBio] = useState('');
   const [newGenres, setNewGenres] = useState('');
   const [error, setError] = useState('');
@@ -22,8 +23,9 @@ const Profile = () => {
           const profileDoc = await getDoc(doc(firestore, 'profiles', user.uid));
           if (profileDoc.exists()) {
             const data = profileDoc.data();
+            setAuthorName(data.authorName || '');
             setBio(data.bio || '');
-            setGenres(data.genres || []);
+            setGenres(data.genre ? data.genre.split(',').map((genre) => genre.trim()) : []);
           }
         } catch (error) {
           console.error('Error fetching profile:', error);
@@ -40,15 +42,17 @@ const Profile = () => {
     setSuccess('');
 
     try {
-      // Update bio and genres in Firestore
+      // Update author name, bio, and genres in Firestore
       await updateDoc(doc(firestore, 'profiles', user.uid), {
+        authorName: newAuthorName,
         bio: newBio,
-        genres: newGenres.split(',').map((genre) => genre.trim()),
+        genre: newGenres.split(',').map((genre) => genre.trim()).join(', '),
       });
 
-      // Update bio in Firebase Authentication
-      await updateProfile(user, { displayName: newBio });
+      // Update display name in Firebase Authentication
+      await updateProfile(user, { displayName: newAuthorName });
 
+      setAuthorName(newAuthorName);
       setBio(newBio);
       setGenres(newGenres.split(',').map((genre) => genre.trim()));
       setEditing(false);
@@ -105,7 +109,7 @@ const Profile = () => {
             className="w-32 h-32 rounded-full mb-4 md:mb-0 md:mr-8 border-4 border-tahiti"
           />
           <div className="flex-grow text-center md:text-left">
-            <h2 className="font-bold text-2xl mb-2">{user.displayName}</h2>
+            <h2 className="font-bold text-2xl mb-2">{authorName}</h2>
             <div className="flex justify-center md:justify-start space-x-4 mb-4">
               <div className="text-center">
                 <span className="font-bold block text-tahiti">5</span>
@@ -127,7 +131,7 @@ const Profile = () => {
             ) : bio}</p>
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-2">
               {genres.map((genre, index) => (
-                <span key={index} className="bg-midnight bg-opacity-50 text-tahiti text-xs font-semibold px-3 py-1 rounded-full">
+                <span key={index} className="bg-white bg-opacity-50 text-tahiti text-xs font-semibold px-3 py-1 rounded-full">
                   {genre}
                 </span>
               ))}

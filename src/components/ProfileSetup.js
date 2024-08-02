@@ -1,4 +1,3 @@
-// components/ProfileSetup.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { firestore, auth } from '../firebase';
@@ -7,6 +6,7 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 const ProfileSetup = () => {
   const [authorName, setAuthorName] = useState('');
   const [genre, setGenre] = useState('');
+  const [bio, setBio] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -14,9 +14,10 @@ const ProfileSetup = () => {
     const user = auth.currentUser;
 
     if (user) {
-      await setDoc(doc(collection(firestore, 'users'), user.uid), {
+      await setDoc(doc(collection(firestore, 'profiles'), user.uid), {
         authorName,
         genre,
+        bio,
         email: user.email,
       });
 
@@ -47,6 +48,17 @@ const ProfileSetup = () => {
             className="w-full px-4 py-2 mt-2 border rounded-lg"
             required
           />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Bio</label>
+          <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            className="w-full px-4 py-2 mt-2 border rounded-lg"
+            rows="4"
+            placeholder="Tell us about yourself..."
+            required
+          ></textarea>
         </div>
         <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg">
           Save
