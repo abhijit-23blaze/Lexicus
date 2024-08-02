@@ -1,3 +1,4 @@
+// components/ProfileSetup.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { firestore, auth } from '../firebase';
@@ -16,9 +17,8 @@ const ProfileSetup = () => {
     if (user) {
       await setDoc(doc(collection(firestore, 'profiles'), user.uid), {
         authorName,
-        genre,
+        genre: genre.split(',').map((g) => g.trim()).join(', '), // Store genres as comma-separated string
         bio,
-        email: user.email,
       });
 
       navigate('/');
@@ -40,7 +40,7 @@ const ProfileSetup = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Preferred Genre</label>
+          <label className="block text-gray-700">Preferred Genres (separate by commas)</label>
           <input
             type="text"
             value={genre}
@@ -52,13 +52,12 @@ const ProfileSetup = () => {
         <div className="mb-4">
           <label className="block text-gray-700">Bio</label>
           <textarea
+            rows="4"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             className="w-full px-4 py-2 mt-2 border rounded-lg"
-            rows="4"
-            placeholder="Tell us about yourself..."
             required
-          ></textarea>
+          />
         </div>
         <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg">
           Save

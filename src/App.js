@@ -10,6 +10,7 @@ import Profile from './components/Profile';
 import { auth } from './firebase';
 import shelvesData from './data/shelves.json';
 import ProfileSetup from './components/ProfileSetup';
+import AddBook from './components/AddBook';
 
 const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
@@ -163,6 +164,7 @@ const App = () => {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile-setup" element={<ProfileSetup />} />
+        <Route path="/add-book" element={<AddBook />} />
       </Routes>
     </Router>
   );

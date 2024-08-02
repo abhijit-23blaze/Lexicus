@@ -1,9 +1,12 @@
+// Profile.js
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth, firestore } from '../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { signOut, updateProfile } from 'firebase/auth';
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [authorName, setAuthorName] = useState('');
   const [bio, setBio] = useState('');
   const [genres, setGenres] = useState([]);
@@ -42,19 +45,17 @@ const Profile = () => {
     setSuccess('');
 
     try {
-      // Update author name, bio, and genres in Firestore
       await updateDoc(doc(firestore, 'profiles', user.uid), {
         authorName: newAuthorName,
         bio: newBio,
-        genre: newGenres.split(',').map((genre) => genre.trim()).join(', '),
+        genre: [...genres, newGenres.trim()].join(', '),
       });
 
-      // Update display name in Firebase Authentication
       await updateProfile(user, { displayName: newAuthorName });
 
       setAuthorName(newAuthorName);
       setBio(newBio);
-      setGenres(newGenres.split(',').map((genre) => genre.trim()));
+      setGenres([...genres, newGenres.trim()]);
       setEditing(false);
       setSuccess('Profile updated successfully.');
     } catch (error) {
@@ -86,7 +87,20 @@ const Profile = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <div className="flex justify-end mb-4 space-x-2">
+      <div className="flex mb-4 items-center space-x-2">
+        <button
+          onClick={() => navigate('/')} // Navigate to the main page
+          className="text-blue-500 font-bold py-2 px-4 rounded hover:text-blue-700"
+        >
+          <i className="fas fa-chevron-left mr-2"></i>Back
+        </button>
+        <div className="flex-grow"></div>
+        <button
+          onClick={() => navigate('/add-book')} // Navigate to add book form
+          className="bg-tahiti hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded"
+        >
+          <i className="fas fa-plus mr-2"></i>New Book
+        </button>
         <button
           onClick={() => setEditing(true)}
           className="bg-tahiti hover:bg-tahiti-600 text-black font-bold py-2 px-4 rounded"
@@ -131,7 +145,7 @@ const Profile = () => {
             ) : bio}</p>
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-2">
               {genres.map((genre, index) => (
-                <span key={index} className="bg-white bg-opacity-50 text-tahiti text-xs font-semibold px-3 py-1 rounded-full">
+                <span key={index} className="bg-midnight bg-opacity-50 text-tahiti text-xs font-semibold px-3 py-1 rounded-full">
                   {genre}
                 </span>
               ))}
@@ -163,8 +177,11 @@ const Profile = () => {
       <div className="mb-8">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-bold">Your Books</h3>
-          <button className="bg-tahiti hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded">
-            <i className="fas fa-plus mr-2"></i>Add New Book
+          <button
+            onClick={() => navigate('/add-book')} // Navigate to add book form
+            className="bg-tahiti hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded"
+          >
+            <i className="fas fa-plus mr-2"></i>New Book
           </button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
