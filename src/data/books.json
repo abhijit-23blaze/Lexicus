@@ -6,7 +6,8 @@
       "publisher": "",
       "coverUrl": "https://via.placeholder.com/150",
       "description": "Empty",
-      "shelf": "study"
+      "shelf": "study",
+      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 02.pdf"
     },
     {
       "id": 2,
@@ -16,7 +17,8 @@
       "coverUrl": "https://via.placeholder.com/150",
       "description": "Empty",
       "progress": 84,
-      "shelf": "work"
+      "shelf": "work",
+      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 02.pdf"
     },
     {
       "id": 3,
@@ -37,7 +39,8 @@
       "coverUrl": "https://via.placeholder.com/150",
       "description": "Empty",
       "progress": 100,
-      "shelf": "study"
+      "shelf": "study",
+      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 02.pdf"
     },
     {
       "id": 5,
