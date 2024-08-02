@@ -1,13 +1,12 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import { Search, SquareLibrary, Library, Menu, Settings, Folder, Home, X, User } from 'lucide-react';
+import { Search, Library, Menu, Settings, Folder, X, User } from 'lucide-react';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import ImportBook from './components/ImportBook';
 import BookCard from './components/BookCard';
-import booksData from './data/books.json';
 import SignIn from './components/SignIn';
 import Profile from './components/Profile';
-import { auth } from './firebase';
+import { auth, firestore } from './firebase';
 import shelvesData from './data/shelves.json';
 import ProfileSetup from './components/ProfileSetup';
 import AddBook from './components/AddBook';
@@ -100,7 +99,7 @@ const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, se
 };
 
 const App = () => {
-  const [books, setBooks] = useState(booksData);
+  const [books, setBooks] = useState([]);
   const [shelves, setShelves] = useState(shelvesData);
   const [favorites, setFavorites] = useState([]);
   const [currentShelf, setCurrentShelf] = useState('all');
@@ -138,9 +137,16 @@ const App = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch('/path-to-your-books-endpoint');
-        const data = await response.json();
-        setBooks(data);
+        const booksCollection = collection(firestore, 'books');
+        const q = query(booksCollection, orderBy('uploadTime', 'desc'));
+        const querySnapshot = await getDocs(q);
+
+        const booksData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        setBooks(booksData);
       } catch (error) {
         console.error('Failed to fetch books:', error);
       }
