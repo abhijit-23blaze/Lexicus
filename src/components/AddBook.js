@@ -44,13 +44,13 @@ const AddBook = () => {
       });
 
       // Optionally, store book details in Firestore
-      // await setDoc(doc(collection(firestore, 'books'), bookId), {
-      //   name: bookName,
-      //   genre,
-      //   description,
-      //   pdfUrl: blockBlobClient.url,
-      //   userId: user.uid,
-      // });
+      await setDoc(doc(collection(firestore, 'books'), bookId), {
+        name: bookName,
+        genre,
+        description,
+        pdfUrl: blockBlobClient.url,
+        userId: user.uid,
+      });
 
       setSuccess('Book uploaded successfully.');
       navigate('/'); // Redirect to main page
