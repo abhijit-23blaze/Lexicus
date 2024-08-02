@@ -1,7 +1,8 @@
 // components/ProfileSetup.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db, auth } from '../firebase';
+import { firestore, auth } from '../firebase';
+import { collection, doc, setDoc } from 'firebase/firestore';
 
 const ProfileSetup = () => {
   const [authorName, setAuthorName] = useState('');
@@ -13,7 +14,7 @@ const ProfileSetup = () => {
     const user = auth.currentUser;
 
     if (user) {
-      await db.collection('users').doc(user.uid).set({
+      await setDoc(doc(collection(firestore, 'users'), user.uid), {
         authorName,
         genre,
         email: user.email,
