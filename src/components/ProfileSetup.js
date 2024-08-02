@@ -1,92 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { auth, firestore } from '../firebase';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+// components/ProfileSetup.js
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { db, auth } from '../firebase';
 
 const ProfileSetup = () => {
-  const [bio, setBio] = useState('');
-  const [genres, setGenres] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [loading, setLoading] = useState(true);
-  const user = auth.currentUser;
+  const [authorName, setAuthorName] = useState('');
+  const [genre, setGenre] = useState('');
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      if (user) {
-        const docRef = doc(firestore, 'profiles', user.uid);
-        const docSnap = await getDoc(docRef);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const user = auth.currentUser;
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          setBio(data.bio);
-          setGenres(data.genres.join(', '));
-        }
-      }
-      setLoading(false);
-    };
+    if (user) {
+      await db.collection('users').doc(user.uid).set({
+        authorName,
+        genre,
+        email: user.email,
+      });
 
-    fetchProfileData();
-  }, [user]);
-
-  const handleProfileSetup = async () => {
-    setError('');
-    setSuccess('');
-
-    if (!user) {
-      setError('User not authenticated.');
-      return;
-    }
-
-    try {
-      const profileData = {
-        bio,
-        genres: genres.split(',').map((genre) => genre.trim()),
-      };
-
-      await setDoc(doc(firestore, 'profiles', user.uid), profileData);
-
-      setSuccess('Profile setup completed successfully.');
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      setError('Error updating profile.');
+      navigate('/');
     }
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <h2 className="text-3xl font-bold mb-4">Setup Your Profile</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-500">{success}</p>}
-      <div className="mb-4">
-        <label className="block text-sm font-semibold mb-1">Bio</label>
-        <textarea
-          rows="4"
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg"
-          placeholder="Tell us about yourself..."
-        ></textarea>
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-semibold mb-1">Genres (comma-separated)</label>
-        <input
-          type="text"
-          value={genres}
-          onChange={(e) => setGenres(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg"
-          placeholder="e.g., Mystery, Thriller, Crime Fiction"
-        />
-      </div>
-      <button
-        onClick={handleProfileSetup}
-        className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-      >
-        Save Profile
-      </button>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-2xl mb-4">Set up your profile</h2>
+        <div className="mb-4">
+          <label className="block text-gray-700">Author Name</label>
+          <input
+            type="text"
+            value={authorName}
+            onChange={(e) => setAuthorName(e.target.value)}
+            className="w-full px-4 py-2 mt-2 border rounded-lg"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Preferred Genre</label>
+          <input
+            type="text"
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+            className="w-full px-4 py-2 mt-2 border rounded-lg"
+            required
+          />
+        </div>
+        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg">
+          Save
+        </button>
+      </form>
     </div>
   );
 };

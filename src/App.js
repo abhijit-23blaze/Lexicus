@@ -1,13 +1,14 @@
+// App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { Search, SquareLibrary, Library, Menu, Settings, Folder, Home, X, User } from 'lucide-react';
 import ImportBook from './components/ImportBook';
 import BookCard from './components/BookCard';
-import booksData from './data/books.json'; // Import the JSON file
+import booksData from './data/books.json';
 import SignIn from './components/SignIn';
-import Profile from './components/Profile'; // Import the Profile component
-import { auth } from './firebase'; // Import auth from firebase
-import shelvesData from './data/shelves.json'; // Adjust the path if necessary
+import Profile from './components/Profile';
+import { auth } from './firebase';
+import shelvesData from './data/shelves.json';
 import ProfileSetup from './components/ProfileSetup';
 
 const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
@@ -66,7 +67,6 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf, currentShelf }) => (
   </aside>
 );
 
-  
 const BookGrid = ({ books, toggleFavorite, favorites }) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
     {books.map(book => (
@@ -100,7 +100,7 @@ const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, se
 
 const App = () => {
   const [books, setBooks] = useState(booksData);
-  const [shelves, setShelves] = useState(shelvesData); // Load shelves from JSON
+  const [shelves, setShelves] = useState(shelvesData);
   const [favorites, setFavorites] = useState([]);
   const [currentShelf, setCurrentShelf] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
