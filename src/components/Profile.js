@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth, firestore } from '../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { signOut, updateProfile } from 'firebase/auth';
+import { ChevronLeft, Plus, Edit, LogOut, Book, Users } from 'lucide-react';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -76,9 +77,9 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl mb-4">You are not logged in</h1>
-        <a href="/signin" className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-midnight to-tahiti text-white">
+        <h1 className="text-3xl font-bold mb-6">You are not logged in</h1>
+        <a href="/signin" className="bg-white text-midnight px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition duration-300">
           Sign In
         </a>
       </div>
@@ -86,127 +87,135 @@ const Profile = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <div className="flex mb-4 items-center space-x-2">
-        <button
-          onClick={() => navigate('/')} // Navigate to the main page
-          className="text-blue-500 font-bold py-2 px-4 rounded hover:text-blue-700"
-        >
-          <i className="fas fa-chevron-left mr-2"></i>Back
-        </button>
-        <div className="flex-grow"></div>
-        <button
-          onClick={() => navigate('/add-book')} // Navigate to add book form
-          className="bg-tahiti hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded"
-        >
-          <i className="fas fa-plus mr-2"></i>New Book
-        </button>
-        <button
-          onClick={() => setEditing(true)}
-          className="bg-tahiti hover:bg-tahiti-600 text-black font-bold py-2 px-4 rounded"
-        >
-          <i className="fas fa-edit mr-2"></i>Edit Profile
-        </button>
-        <button
-          onClick={handleLogout}
-          className="bg-tahiti hover:bg-tahiti-600 text-black font-bold py-2 px-4 rounded"
-        >
-          <i className="fas fa-sign-out-alt mr-2"></i>Logout
-        </button>
-      </div>
-
-      <div className="bg-black bg-opacity-30 rounded-lg p-6 backdrop-blur-sm mb-8">
-        <div className="flex flex-col md:flex-row items-center md:items-start">
-          <img
-            src="/api/placeholder/150/150"
-            alt="Author Profile"
-            className="w-32 h-32 rounded-full mb-4 md:mb-0 md:mr-8 border-4 border-tahiti"
-          />
-          <div className="flex-grow text-center md:text-left">
-            <h2 className="font-bold text-2xl mb-2">{authorName}</h2>
-            <div className="flex justify-center md:justify-start space-x-4 mb-4">
-              <div className="text-center">
-                <span className="font-bold block text-tahiti">5</span>
-                <span className="text-sm">books</span>
-              </div>
-              <div className="text-center">
-                <span className="font-bold block text-tahiti">10.5K</span>
-                <span className="text-sm">readers</span>
-              </div>
-            </div>
-            <p className="text-sm mb-2">{editing ? (
-              <textarea
-                rows="4"
-                value={newBio}
-                onChange={(e) => setNewBio(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg"
-                placeholder="Tell us about yourself..."
-              ></textarea>
-            ) : bio}</p>
-            <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-2">
-              {genres.map((genre, index) => (
-                <span key={index} className="bg-midnight bg-opacity-50 text-tahiti text-xs font-semibold px-3 py-1 rounded-full">
-                  {genre}
-                </span>
-              ))}
-              {editing && (
-                <input
-                  type="text"
-                  value={newGenres}
-                  onChange={(e) => setNewGenres(e.target.value)}
-                  className="bg-transparent text-white text-xs font-semibold px-3 py-1 rounded-full"
-                  placeholder="Add Genre"
-                />
-              )}
-              {editing && (
-                <button
-                  onClick={() => {
-                    setGenres([...genres, newGenres.trim()]);
-                    setNewGenres('');
-                  }}
-                  className="bg-tahiti text-white text-xs font-semibold px-3 py-1 rounded-full hover:bg-tahiti-600"
-                >
-                  <i className="fas fa-plus mr-1"></i>Add Genre
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold">Your Books</h3>
+    <div className="min-h-screen bg-gradient-to-br from-midnight to-tahiti text-white">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="flex mb-8 items-center space-x-4">
           <button
-            onClick={() => navigate('/add-book')} // Navigate to add book form
-            className="bg-blue hover:bg-tahiti-600 text-white font-bold py-2 px-4 rounded"
+            onClick={() => navigate('/')}
+            className="text-white font-semibold py-2 px-4 rounded-lg hover:bg-white hover:bg-opacity-20 transition duration-300 flex items-center"
           >
-            <i className="fas fa-plus mr-2"></i>New Book
+            <ChevronLeft className="mr-2" size={20} />
+            Back
+          </button>
+          <div className="flex-grow"></div>
+          <button
+            onClick={() => navigate('/add-book')}
+            className="bg-white text-midnight font-semibold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-300 flex items-center"
+          >
+            <Plus className="mr-2" size={20} />
+            New Book
+          </button>
+          <button
+            onClick={() => setEditing(true)}
+            className="bg-white text-midnight font-semibold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-300 flex items-center"
+          >
+            <Edit className="mr-2" size={20} />
+            Edit Profile
+          </button>
+          <button
+            onClick={handleLogout}
+            className="bg-white text-midnight font-semibold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-300 flex items-center"
+          >
+            <LogOut className="mr-2" size={20} />
+            Logout
           </button>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="relative group">
+
+        <div className="bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-lg shadow-xl mb-12">
+          <div className="flex flex-col md:flex-row items-center md:items-start">
             <img
-              src="/api/placeholder/300/400"
-              alt="Book Cover"
-              className="w-full aspect-[3/4] object-cover rounded-lg shadow-lg transition duration-300 group-hover:opacity-75"
+              src="/api/placeholder/200/200"
+              alt="Author Profile"
+              className="w-40 h-40 rounded-full mb-6 md:mb-0 md:mr-8 border-4 border-tahiti shadow-lg"
             />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-              <button className="bg-tahiti text-white px-3 py-1 rounded-full text-sm">Edit Book</button>
+            <div className="flex-grow text-center md:text-left">
+              <h2 className="font-bold text-3xl mb-4">{authorName}</h2>
+              <div className="flex justify-center md:justify-start space-x-8 mb-6">
+                <div className="text-center">
+                  <span className="font-bold block text-3xl text-tahiti">5</span>
+                  <span className="text-sm uppercase tracking-wide">books</span>
+                </div>
+                <div className="text-center">
+                  <span className="font-bold block text-3xl text-tahiti">10.5K</span>
+                  <span className="text-sm uppercase tracking-wide">readers</span>
+                </div>
+              </div>
+              <p className="text-lg mb-4 leading-relaxed">{editing ? (
+                <textarea
+                  rows="4"
+                  value={newBio}
+                  onChange={(e) => setNewBio(e.target.value)}
+                  className="w-full px-4 py-2 bg-white bg-opacity-20 rounded-lg text-white placeholder-gray-300"
+                  placeholder="Tell us about yourself..."
+                ></textarea>
+              ) : bio}</p>
+              <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-4">
+                {genres.map((genre, index) => (
+                  <span key={index} className="bg-tahiti bg-opacity-50 text-white text-sm font-semibold px-4 py-1 rounded-full">
+                    {genre}
+                  </span>
+                ))}
+                {editing && (
+                  <input
+                    type="text"
+                    value={newGenres}
+                    onChange={(e) => setNewGenres(e.target.value)}
+                    className="bg-white bg-opacity-20 text-white text-sm font-semibold px-4 py-1 rounded-full placeholder-gray-300"
+                    placeholder="Add Genre"
+                  />
+                )}
+                {editing && (
+                  <button
+                    onClick={() => {
+                      setGenres([...genres, newGenres.trim()]);
+                      setNewGenres('');
+                    }}
+                    className="bg-tahiti text-white text-sm font-semibold px-4 py-1 rounded-full hover:bg-opacity-80 transition duration-300"
+                  >
+                    <Plus className="inline mr-1" size={16} />
+                    Add Genre
+                  </button>
+                )}
+              </div>
             </div>
           </div>
-          {/* Repeat for other books */}
         </div>
-      </div>
 
-      {editing && (
-        <button
-          onClick={handleSaveChanges}
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-        >
-          Save Changes
-        </button>
-      )}
+        <div className="mb-12">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-bold">Your Books</h3>
+            <button
+              onClick={() => navigate('/add-book')}
+              className="bg-white text-midnight font-semibold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-300 flex items-center"
+            >
+              <Plus className="mr-2" size={20} />
+              New Book
+            </button>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="relative group">
+              <img
+                src="/api/placeholder/300/400"
+                alt="Book Cover"
+                className="w-full aspect-[3/4] object-cover rounded-lg shadow-lg transition duration-300 group-hover:opacity-75"
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                <button className="bg-tahiti text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-opacity-90 transition duration-300">Edit Book</button>
+              </div>
+            </div>
+            {/* Repeat for other books */}
+          </div>
+        </div>
+
+        {editing && (
+          <button
+            onClick={handleSaveChanges}
+            className="bg-tahiti text-white py-3 px-6 rounded-lg font-semibold hover:bg-opacity-90 transition duration-300"
+          >
+            Save Changes
+          </button>
+        )}
+      </div>
     </div>
   );
 };
