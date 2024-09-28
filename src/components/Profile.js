@@ -17,6 +17,7 @@ const Profile = () => {
   const [newGenres, setNewGenres] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [profileImage, setProfileImage] = useState('');
 
   const user = auth.currentUser;
 
@@ -31,6 +32,9 @@ const Profile = () => {
             setBio(data.bio || '');
             setGenres(data.genre ? data.genre.split(',').map((genre) => genre.trim()) : []);
           }
+          
+          // Set the profile image URL
+          setProfileImage(user.photoURL || '/api/placeholder/200/200');
         } catch (error) {
           console.error('Error fetching profile:', error);
           setError('Error fetching profile.');
@@ -40,6 +44,7 @@ const Profile = () => {
 
     fetchProfileData();
   }, [user]);
+
 
   const handleSaveChanges = async () => {
     setError('');
@@ -124,9 +129,9 @@ const Profile = () => {
         <div className="bg-white rounded-xl p-8 shadow-xl mb-12">
           <div className="flex flex-col md:flex-row items-center md:items-start">
             <img
-              src="/api/placeholder/200/200"
+              src={profileImage}
               alt="Author Profile"
-              className="w-40 h-40 rounded-full mb-6 md:mb-0 md:mr-8 border-4 border-blue-500 shadow-lg"
+              className="w-40 h-40 rounded-full mb-6 md:mb-0 md:mr-8 border-4 border-blue-500 shadow-lg object-cover"
             />
             <div className="flex-grow text-center md:text-left">
               <h2 className="font-bold text-3xl mb-4 text-gray-800">{authorName}</h2>
