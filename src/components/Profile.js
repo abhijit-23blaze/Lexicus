@@ -77,9 +77,9 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-midnight to-tahiti text-white">
-        <h1 className="text-3xl font-bold mb-6">You are not logged in</h1>
-        <a href="/signin" className="bg-white text-midnight px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition duration-300">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">You are not logged in</h1>
+        <a href="/signin" className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">
           Sign In
         </a>
       </div>
@@ -87,12 +87,12 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-midnight to-tahiti text-white">
+    <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="flex mb-8 items-center space-x-4">
           <button
             onClick={() => navigate('/')}
-            className="text-white font-semibold py-2 px-4 rounded-lg hover:bg-white hover:bg-opacity-20 transition duration-300 flex items-center"
+            className="text-blue-600 font-semibold py-2 px-4 rounded-lg hover:bg-blue-100 transition duration-300 flex items-center"
           >
             <ChevronLeft className="mr-2" size={20} />
             Back
@@ -100,58 +100,58 @@ const Profile = () => {
           <div className="flex-grow"></div>
           <button
             onClick={() => navigate('/add-book')}
-            className="bg-white text-midnight font-semibold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-300 flex items-center"
+            className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 flex items-center"
           >
             <Plus className="mr-2" size={20} />
             New Book
           </button>
           <button
             onClick={() => setEditing(true)}
-            className="bg-white text-midnight font-semibold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-300 flex items-center"
+            className="bg-yellow-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-yellow-600 transition duration-300 flex items-center"
           >
             <Edit className="mr-2" size={20} />
             Edit Profile
           </button>
           <button
             onClick={handleLogout}
-            className="bg-white text-midnight font-semibold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-300 flex items-center"
+            className="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 flex items-center"
           >
             <LogOut className="mr-2" size={20} />
             Logout
           </button>
         </div>
 
-        <div className="bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-lg shadow-xl mb-12">
+        <div className="bg-white rounded-xl p-8 shadow-xl mb-12">
           <div className="flex flex-col md:flex-row items-center md:items-start">
             <img
               src="/api/placeholder/200/200"
               alt="Author Profile"
-              className="w-40 h-40 rounded-full mb-6 md:mb-0 md:mr-8 border-4 border-tahiti shadow-lg"
+              className="w-40 h-40 rounded-full mb-6 md:mb-0 md:mr-8 border-4 border-blue-500 shadow-lg"
             />
             <div className="flex-grow text-center md:text-left">
-              <h2 className="font-bold text-3xl mb-4">{authorName}</h2>
+              <h2 className="font-bold text-3xl mb-4 text-gray-800">{authorName}</h2>
               <div className="flex justify-center md:justify-start space-x-8 mb-6">
                 <div className="text-center">
-                  <span className="font-bold block text-3xl text-tahiti">5</span>
-                  <span className="text-sm uppercase tracking-wide">books</span>
+                  <span className="font-bold block text-3xl text-blue-600">5</span>
+                  <span className="text-sm uppercase tracking-wide text-gray-600">books</span>
                 </div>
                 <div className="text-center">
-                  <span className="font-bold block text-3xl text-tahiti">10.5K</span>
-                  <span className="text-sm uppercase tracking-wide">readers</span>
+                  <span className="font-bold block text-3xl text-blue-600">10.5K</span>
+                  <span className="text-sm uppercase tracking-wide text-gray-600">readers</span>
                 </div>
               </div>
-              <p className="text-lg mb-4 leading-relaxed">{editing ? (
+              <p className="text-lg mb-4 leading-relaxed text-gray-700">{editing ? (
                 <textarea
                   rows="4"
                   value={newBio}
                   onChange={(e) => setNewBio(e.target.value)}
-                  className="w-full px-4 py-2 bg-white bg-opacity-20 rounded-lg text-white placeholder-gray-300"
+                  className="w-full px-4 py-2 bg-gray-100 rounded-lg text-gray-800 placeholder-gray-500"
                   placeholder="Tell us about yourself..."
                 ></textarea>
               ) : bio}</p>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-4">
                 {genres.map((genre, index) => (
-                  <span key={index} className="bg-tahiti bg-opacity-50 text-white text-sm font-semibold px-4 py-1 rounded-full">
+                  <span key={index} className="bg-blue-100 text-blue-800 text-sm font-semibold px-4 py-1 rounded-full">
                     {genre}
                   </span>
                 ))}
@@ -160,7 +160,7 @@ const Profile = () => {
                     type="text"
                     value={newGenres}
                     onChange={(e) => setNewGenres(e.target.value)}
-                    className="bg-white bg-opacity-20 text-white text-sm font-semibold px-4 py-1 rounded-full placeholder-gray-300"
+                    className="bg-gray-100 text-gray-800 text-sm font-semibold px-4 py-1 rounded-full placeholder-gray-500"
                     placeholder="Add Genre"
                   />
                 )}
@@ -170,7 +170,7 @@ const Profile = () => {
                       setGenres([...genres, newGenres.trim()]);
                       setNewGenres('');
                     }}
-                    className="bg-tahiti text-white text-sm font-semibold px-4 py-1 rounded-full hover:bg-opacity-80 transition duration-300"
+                    className="bg-blue-500 text-white text-sm font-semibold px-4 py-1 rounded-full hover:bg-blue-600 transition duration-300"
                   >
                     <Plus className="inline mr-1" size={16} />
                     Add Genre
@@ -183,10 +183,10 @@ const Profile = () => {
 
         <div className="mb-12">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-bold">Your Books</h3>
+            <h3 className="text-2xl font-bold text-gray-800">Your Books</h3>
             <button
               onClick={() => navigate('/add-book')}
-              className="bg-white text-midnight font-semibold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-300 flex items-center"
+              className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 flex items-center"
             >
               <Plus className="mr-2" size={20} />
               New Book
@@ -200,7 +200,7 @@ const Profile = () => {
                 className="w-full aspect-[3/4] object-cover rounded-lg shadow-lg transition duration-300 group-hover:opacity-75"
               />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                <button className="bg-tahiti text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-opacity-90 transition duration-300">Edit Book</button>
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition duration-300">Edit Book</button>
               </div>
             </div>
             {/* Repeat for other books */}
@@ -210,7 +210,7 @@ const Profile = () => {
         {editing && (
           <button
             onClick={handleSaveChanges}
-            className="bg-tahiti text-white py-3 px-6 rounded-lg font-semibold hover:bg-opacity-90 transition duration-300"
+            className="bg-blue-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
           >
             Save Changes
           </button>
