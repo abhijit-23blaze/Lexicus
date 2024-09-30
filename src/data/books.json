@@ -1,13 +1,13 @@
 [
     {
       "id": 1,
-      "title": "InsIIITS",
+      "title": "InsIIITS - 5 : A new start",
       "author": "InsIIITS",
       "publisher": "",
-      "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/1722606048928-1%20(1).jpg",
+      "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/Screenshot 2024-10-01 000644.png",
       "description": "Enoy the latest editionof the Insiits magzine ",
       "shelf": "insiiits",
-      "link": "https://lexicus.blob.core.windows.net/%24web/external/pdf/web/PDFs/1722606044817-1%20(2).pdf"
+      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/insIIITs issue 5.pdf"
     },
     {
       "id": 2,
@@ -29,7 +29,7 @@
       "description": "Empty",
       "progress": 84,
       "shelf": "blueLock",
-      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 02.pdf"
+      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/insIIITs issue 5.pdf"
     },
     {
       "id": 4,
