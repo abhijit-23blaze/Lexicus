@@ -10,6 +10,7 @@ import { auth, firestore } from './firebase';
 import shelvesData from './data/shelves.json';
 import ProfileSetup from './components/ProfileSetup';
 import AddBook from './components/AddBook';
+import booksData from './data/books.json'; // Import the books data
 
 const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
@@ -100,7 +101,7 @@ const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, se
 
 const App = () => {
   const [books, setBooks] = useState([]);
-  const [shelves, setShelves] = useState(shelvesData);
+  const [shelves] = useState(shelvesData);
   const [favorites, setFavorites] = useState([]);
   const [currentShelf, setCurrentShelf] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -135,24 +136,8 @@ const App = () => {
   };
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const booksCollection = collection(firestore, 'books');
-        const q = query(booksCollection, orderBy('uploadTime', 'desc'));
-        const querySnapshot = await getDocs(q);
-
-        const booksData = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-
-        setBooks(booksData);
-      } catch (error) {
-        console.error('Failed to fetch books:', error);
-      }
-    };
-
-    fetchBooks();
+    // Load books from the JSON file
+    setBooks(booksData);
   }, []);
 
   return (
