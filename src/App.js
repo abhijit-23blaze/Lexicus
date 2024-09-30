@@ -143,7 +143,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage 
+        <Route path="/Lexicus" element={<HomePage 
           books={getBooksByShelf(currentShelf)} 
           toggleFavorite={toggleFavorite} 
           setShelf={setCurrentShelf} 
