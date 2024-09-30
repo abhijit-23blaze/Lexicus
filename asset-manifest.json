@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Lexicus/static/css/main.8b5f41c2.css",
-    "main.js": "/Lexicus/static/js/main.c4818c67.js",
+    "main.js": "/Lexicus/static/js/main.e7a0de6f.js",
     "static/js/453.5db76ac0.chunk.js": "/Lexicus/static/js/453.5db76ac0.chunk.js",
     "index.html": "/Lexicus/index.html",
     "main.8b5f41c2.css.map": "/Lexicus/static/css/main.8b5f41c2.css.map",
-    "main.c4818c67.js.map": "/Lexicus/static/js/main.c4818c67.js.map",
+    "main.e7a0de6f.js.map": "/Lexicus/static/js/main.e7a0de6f.js.map",
     "453.5db76ac0.chunk.js.map": "/Lexicus/static/js/453.5db76ac0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8b5f41c2.css",
-    "static/js/main.c4818c67.js"
+    "static/js/main.e7a0de6f.js"
   ]
 }
