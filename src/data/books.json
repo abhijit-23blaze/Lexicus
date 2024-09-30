@@ -1,13 +1,13 @@
 [
     {
       "id": 1,
-      "title": "THE PLAN",
-      "author": "Unknown author",
+      "title": "InsIIITS",
+      "author": "InsIIITS",
       "publisher": "",
-      "coverUrl": "https://via.placeholder.com/150",
-      "description": "Empty",
-      "shelf": "study",
-      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 02.pdf"
+      "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/1722606048928-1%20(1).jpg",
+      "description": "Enoy the latest editionof the Insiits magzine ",
+      "shelf": "insiiits",
+      "link": "https://lexicus.blob.core.windows.net/%24web/external/pdf/web/PDFs/1722606044817-1%20(2).pdf"
     },
     {
       "id": 2,
@@ -53,16 +53,6 @@
     },
     {
       "id": 6,
-      "title": "Zero to One: Notes on Startups, or How to Build the Future",
-      "author": "Peter Thiel & Blake Masters",
-      "publisher": "calibre 0.9.22",
-      "coverUrl": "https://via.placeholder.com/150",
-      "description": "Empty",
-      "progress": 75,
-      "shelf": "study"
-    },
-    {
-      "id": 7,
       "title": "Blue Lock - Volume 01",
       "author": "CamScanner",
       "publisher": "iLovePDF",
@@ -71,6 +61,17 @@
       "progress": 99,
       "shelf": "blueLock",
       "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/BLvol1.pdf"
+    },
+    {
+      "id": 7,
+      "title": "Blue Lock - Volume 02",
+      "author": "Unknown author",
+      "publisher": "",
+      "coverUrl": "https://m.media-amazon.com/images/I/81v0b6wD1hL._SL1500_.jpg",
+      "description": "Empty",
+      "progress": 84,
+      "shelf": "blueLock",
+      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 02.pdf"
     },
     {
       "id": 8,

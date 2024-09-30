@@ -27,7 +27,7 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
         <div className="relative">
           <input
             type="text"
-            placeholder="Search my library"
+            placeholder="Search"
             className="w-full py-2 px-4 bg-purple-100 rounded-full text-sm"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
