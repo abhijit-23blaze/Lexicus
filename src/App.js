@@ -12,9 +12,48 @@ import ProfileSetup from './components/ProfileSetup';
 import AddBook from './components/AddBook';
 import booksData from './data/books.json';
 
-const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
-  const navigate = useNavigate();
+const AboutPopup = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
 
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-8 max-w-md w-full">
+        <h2 className="text-2xl font-semibold mb-4">Welcome to Lexicus Beta! 📚✨</h2>
+        <p className="text-gray-700 mb-4">
+          You're experiencing the beta version of Lexicus, your upcoming digital sanctuary for book lovers! 🏠📖
+        </p>
+        <p className="text-gray-700 mb-4">
+          Current beta features:
+        </p>
+        <p className="text-gray-700 mb-4">
+          📤 Access a curated library at your fingertips<br/>
+          📱 Enjoy a smooth, intuitive reading experience<br/>
+          🚀 Test our cutting-edge reader technology
+        </p>
+        <p className="text-gray-700 mb-4">
+          Coming in the full version:
+        </p>
+        <p className="text-gray-700 mb-4">
+          📚 Upload and share your own books<br/>
+          🔍 Explore a vastly expanded collection of titles<br/>
+          🌟 Experience enhanced features and functionality
+        </p>
+        <p className="text-gray-700 mb-6">
+          🎉 Exciting news! This is just the beginning. Our full version is coming soon, packed with mind-blowing features that will revolutionize your reading experience! Stay tuned for a literary adventure like no other! 🔜✨
+        </p>
+        <button
+          onClick={onClose}
+          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  );
+};
+
+
+const Header = ({ toggleSidebar, searchQuery, setSearchQuery, openAboutPopup }) => {
   return (
     <header className="flex items-center justify-between p-4 bg-white">
       <div className="flex items-center">
@@ -36,7 +75,7 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
         </div>
       </div>
       <div className="flex items-center">
-        <button onClick={() => navigate('/about')} className="text-gray-600">
+        <button onClick={openAboutPopup} className="text-gray-600">
           <Info size={24} />
         </button>
       </div>
@@ -81,42 +120,27 @@ const BookGrid = ({ books, toggleFavorite, favorites }) => (
 
 const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, searchQuery, setSearchQuery }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAboutPopupOpen, setIsAboutPopupOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const openAboutPopup = () => setIsAboutPopupOpen(true);
+  const closeAboutPopup = () => setIsAboutPopupOpen(false);
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
-      <Header toggleSidebar={toggleSidebar} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <Header 
+        toggleSidebar={toggleSidebar} 
+        searchQuery={searchQuery} 
+        setSearchQuery={setSearchQuery}
+        openAboutPopup={openAboutPopup}
+      />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} setShelf={setShelf} currentShelf={currentShelf} />
         <main className="flex-1 overflow-y-auto">
           <BookGrid books={books} toggleFavorite={toggleFavorite} favorites={favorites} />
         </main>
       </div>
-    </div>
-  );
-};
-
-const About = () => {
-  return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-4">About Lexicus</h1>
-      <p className="mb-4">
-        Lexicus is a digital library management system designed to help book lovers organize and explore their personal collections.
-      </p>
-      <p className="mb-4">
-        With Lexicus, you can:
-      </p>
-      <ul className="list-disc pl-8 mb-4">
-        <li>Catalog your books</li>
-        <li>Organize books into custom shelves</li>
-        <li>Mark favorites for quick access</li>
-        <li>Search your collection</li>
-        <li>Discover new reading recommendations</li>
-      </ul>
-      <p>
-        Happy reading with Lexicus!
-      </p>
+      <AboutPopup isOpen={isAboutPopupOpen} onClose={closeAboutPopup} />
     </div>
   );
 };
@@ -177,7 +201,6 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile-setup" element={<ProfileSetup />} />
         <Route path="/add-book" element={<AddBook />} />
-        <Route path="/about" element={<About />} />
       </Routes>
     </Router>
   );
