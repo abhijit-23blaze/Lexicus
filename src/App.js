@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import { Search, Library, Menu, Settings, Folder, X, User } from 'lucide-react';
+import { Search, Library, Menu, Info, Folder, X } from 'lucide-react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import ImportBook from './components/ImportBook';
 import BookCard from './components/BookCard';
@@ -10,7 +10,7 @@ import { auth, firestore } from './firebase';
 import shelvesData from './data/shelves.json';
 import ProfileSetup from './components/ProfileSetup';
 import AddBook from './components/AddBook';
-import booksData from './data/books.json'; // Import the books data
+import booksData from './data/books.json';
 
 const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
@@ -36,10 +36,8 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery }) => {
         </div>
       </div>
       <div className="flex items-center">
-        <Settings className="mr-4 text-gray-600 hidden sm:block" />
-        <Folder className="mr-4 text-gray-600 hidden sm:block" />
-        <button onClick={() => navigate('/profile')} className="text-gray-600">
-          <User size={24} />
+        <button onClick={() => navigate('/about')} className="text-gray-600">
+          <Info size={24} />
         </button>
       </div>
     </header>
@@ -99,6 +97,30 @@ const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, se
   );
 };
 
+const About = () => {
+  return (
+    <div className="container mx-auto p-8">
+      <h1 className="text-3xl font-bold mb-4">About Lexicus</h1>
+      <p className="mb-4">
+        Lexicus is a digital library management system designed to help book lovers organize and explore their personal collections.
+      </p>
+      <p className="mb-4">
+        With Lexicus, you can:
+      </p>
+      <ul className="list-disc pl-8 mb-4">
+        <li>Catalog your books</li>
+        <li>Organize books into custom shelves</li>
+        <li>Mark favorites for quick access</li>
+        <li>Search your collection</li>
+        <li>Discover new reading recommendations</li>
+      </ul>
+      <p>
+        Happy reading with Lexicus!
+      </p>
+    </div>
+  );
+};
+
 const App = () => {
   const [books, setBooks] = useState([]);
   const [shelves] = useState(shelvesData);
@@ -136,7 +158,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    // Load books from the JSON file
     setBooks(booksData);
   }, []);
 
@@ -156,6 +177,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile-setup" element={<ProfileSetup />} />
         <Route path="/add-book" element={<AddBook />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </Router>
   );
