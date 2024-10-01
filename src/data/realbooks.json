@@ -1,0 +1,189 @@
+[
+    {
+      "id": 1,
+      "title": "InsIIITS - 5 : A new start",
+      "author": "InsIIITS",
+      "publisher": "",
+      "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/Screenshot 2024-10-01 000644.png",
+      "description": "Enoy the latest editionof the Insiits magzine ",
+      "shelf": "insiiits",
+      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/insIIITs issue 5.pdf"
+    },
+    {
+      "id": 2,
+      "title": "HACK",
+      "author": "Unknown author",
+      "publisher": "Skia/PDF m125",
+      "coverUrl": "https://via.placeholder.com/150",
+      "description": "Empty",
+      "progress": 84,
+      "shelf": "work",
+      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 02.pdf"
+    },
+    {
+      "id": 3,
+      "title": "Blue Lock - Volume 02",
+      "author": "Unknown author",
+      "publisher": "",
+      "coverUrl": "https://m.media-amazon.com/images/I/81v0b6wD1hL._SL1500_.jpg",
+      "description": "Empty",
+      "progress": 84,
+      "shelf": "blueLock",
+      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/insIIITs issue 5.pdf"
+    },
+    {
+      "id": 4,
+      "title": "-Problem Statement-",
+      "author": "Ritavan Dasgupta",
+      "publisher": "Canva",
+      "coverUrl": "https://via.placeholder.com/150",
+      "description": "Empty",
+      "progress": 100,
+      "shelf": "study",
+      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 02.pdf"
+    },
+    {
+      "id": 5,
+      "title": "The Subtle Art of Not Giving a F*ck - EnglishPDF",
+      "author": "Mark Manson",
+      "publisher": "calibre 3.44.0",
+      "coverUrl": "https://via.placeholder.com/150",
+      "description": "Empty",
+      "shelf": "selfHelp"
+    },
+    {
+        "id": 6,
+        "title": "Blue Lock - Volume 01",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://m.media-amazon.com/images/I/81Z85oL1xvL._SL1500_.jpg",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/BLvol1.pdf"
+      },
+      {
+        "id": 7,
+        "title": "Blue Lock - Volume 02",
+        "author": "Unknown author",
+        "publisher": "",
+        "coverUrl": "https://m.media-amazon.com/images/I/81v0b6wD1hL._SL1500_.jpg",
+        "description": "Empty",
+        "progress": 84,
+        "shelf": "blueLock",
+        "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 02.pdf"
+      },
+      {
+        "id": 8,
+        "title": "Blue Lock - Volume 03",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://m.media-amazon.com/images/I/81csvNKr+GL._SL1500_.jpg",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 03.pdf"
+      },
+      {
+        "id": 9,
+        "title": "Blue Lock - Volume 04",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://m.media-amazon.com/images/I/81zKxxLoi+L._SL1500_.jpg",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 04.pdf"
+      },
+      {
+        "id": 10,
+        "title": "Blue Lock - Volume 05",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://m.media-amazon.com/images/I/41ZOVJwz5oL._SY445_SX342_.jpg",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 05.pdf"
+      },
+      {
+        "id": 11,
+        "title": "Blue Lock - Volume 06",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://images-eu.ssl-images-amazon.com/images/I/91g9GmfvT6L._AC_UL232_SR232,232_.jpg",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 06.pdf"
+      },
+      {
+        "id": 12,
+        "title": "Blue Lock - Volume 07",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://images-eu.ssl-images-amazon.com/images/I/81BAtLRPWhL._AC_UL232_SR232,232_.jpg",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 07.pdf"
+      },
+      {
+        "id": 13,
+        "title": "Blue Lock - Volume 08",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://images-eu.ssl-images-amazon.com/images/I/81cjgp8j8HL._AC_UL232_SR232,232_.jpg",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 08.pdf"
+      },
+      {
+        "id": 14,
+        "title": "Blue Lock - Volume 09",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://cdn.kodansha.us/statics/Publications/730/Pages/page-0001.jpg?f=webp&w=405",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/BLvol1.pdf"
+      },
+      {
+        "id": 15,
+        "title": "Blue Lock - Volume 10",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://cdn.kodansha.us/statics/Publications/729/Pages/page-0001.jpg?f=webp&w=405",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/BLvol1.pdf"
+      },
+      {
+        "id": 16,
+        "title": "Blue Lock - Volume 11",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://cdn.kodansha.us/statics/Publications/753/Pages/page-0001.jpg?f=webp&w=405",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/BLvol1.pdf"
+      },
+      {
+        "id": 17,
+        "title": "Blue Lock CH - 267",
+        "author": "CamScanner",
+        "publisher": "iLovePDF",
+        "coverUrl": "https://m.media-amazon.com/images/I/81Z85oL1xvL._SL1500_.jpg",
+        "description": "Empty",
+        "progress": 99,
+        "shelf": "blueLock",
+        "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock CH - 267.pdf"
+      }
+    
+
+  ]
+  
