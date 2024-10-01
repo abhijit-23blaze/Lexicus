@@ -18,7 +18,7 @@ const AboutPopup = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-8 max-w-lg w-3/4 sm:w-1/2">
-        <h2 className="text-2xl font-semibold mb-4">Welcome to Lexicus Beta! 📚✨</h2>
+        <h2 className="text-2xl font-semibold mb-4">Welcome to Lexicus Beta!!</h2>
         <p className="text-gray-700 font-semibold mb-4">
           What is Lexicus ??
         </p>
