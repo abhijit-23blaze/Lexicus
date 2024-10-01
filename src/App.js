@@ -17,29 +17,33 @@ const AboutPopup = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-8 max-w-md w-full">
+      <div className="bg-white rounded-lg p-8 max-w-lg w-3/4 sm:w-1/2">
         <h2 className="text-2xl font-semibold mb-4">Welcome to Lexicus Beta! 📚✨</h2>
-        <p className="text-gray-700 mb-4">
-          You're experiencing the beta version of Lexicus, your upcoming digital sanctuary for book lovers! 🏠📖
+        <p className="text-gray-700 font-semibold mb-4">
+          What is Lexicus ??
         </p>
         <p className="text-gray-700 mb-4">
-          Current beta features:
+          Lexicus is a place where you can read books and magzines without the hassel of ads and other annoying designs, or if you are an author you can upload your books here for free and gain an audience
         </p>
+       
         <p className="text-gray-700 mb-4">
-          📤 Access a curated library at your fingertips<br/>
-          📱 Enjoy a smooth, intuitive reading experience<br/>
-          🚀 Test our cutting-edge reader technology
+          This is just the beta version of the site. The full version will be coming soon!!
         </p>
+             
         <p className="text-gray-700 mb-4">
-          Coming in the full version:
-        </p>
-        <p className="text-gray-700 mb-4">
-          📚 Upload and share your own books<br/>
-          🔍 Explore a vastly expanded collection of titles<br/>
-          🌟 Experience enhanced features and functionality
+        <a 
+            href="https://abhijit-23blaze.github.io/Portfolio/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-purple-600 hover:text-purple-800 underline"
+          >
+          Made by Abhijit Patil (UG-2)
+          </a>
         </p>
         <p className="text-gray-700 mb-6">
-          🎉 Exciting news! This is just the beginning. Our full version is coming soon, packed with mind-blowing features that will revolutionize your reading experience! Stay tuned for a literary adventure like no other! 🔜✨
+          
+            If you liked the site or have any feedback realted to it ? Just drop me a DM I am always open to new ideas !! 
+          
         </p>
         <button
           onClick={onClose}
@@ -51,7 +55,6 @@ const AboutPopup = ({ isOpen, onClose }) => {
     </div>
   );
 };
-
 
 const Header = ({ toggleSidebar, searchQuery, setSearchQuery, openAboutPopup }) => {
   return (
