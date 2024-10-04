@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://abhijit-23blaze.github.io/Lexicus",
-
   "dependencies": {
     "@azure/storage-blob": "^12.24.0",
     "@tailwindcss/line-clamp": "^0.4.4",
@@ -11,11 +10,13 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "firebase": "^10.12.3",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.400.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.0",
     "react-scripts": "5.0.1",
+    "react-window": "^1.8.10",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

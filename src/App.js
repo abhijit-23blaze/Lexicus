@@ -1,3 +1,9 @@
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { FixedSizeGrid as Grid } from 'react-window';
+import { debounce } from 'lodash';
+import shelvesData from './data/shelves.json';
+import booksData from './data/books.json';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { Search, Library, Menu, Info, Folder, X } from 'lucide-react';
@@ -11,6 +17,7 @@ import shelvesData from './data/shelves.json';
 // import ProfileSetup from './components/ProfileSetup';
 // import AddBook from './components/AddBook';
 import booksData from './data/books.json';
+
 
 const AboutPopup = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -108,18 +115,36 @@ const Sidebar = ({ isOpen, toggleSidebar, setShelf, currentShelf }) => (
   </aside>
 );
 
-const BookGrid = ({ books, toggleFavorite, favorites }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 p-6">
-    {books.map(book => (
-      <BookCard 
-        key={book.id} 
-        book={book} 
-        toggleFavorite={toggleFavorite} 
-        isFavorite={favorites.includes(book.id)} 
-      />
-    ))}
-  </div>
-);
+const BookGrid = React.memo(({ books, toggleFavorite, favorites }) => {
+  const cellRenderer = useCallback(({ columnIndex, rowIndex, style }) => {
+    const index = rowIndex * 4 + columnIndex;
+    if (index >= books.length) return null;
+    const book = books[index];
+    return (
+      <div style={style}>
+        <BookCard
+          book={book}
+          toggleFavorite={toggleFavorite}
+          isFavorite={favorites.includes(book.id)}
+        />
+      </div>
+    );
+  }, [books, toggleFavorite, favorites]);
+
+  return (
+    <Grid
+      columnCount={4}
+      columnWidth={300}
+      height={window.innerHeight - 100}
+      rowCount={Math.ceil(books.length / 4)}
+      rowHeight={400}
+      width={window.innerWidth - 64}
+    >
+      {cellRenderer}
+    </Grid>
+  );
+});
+
 
 const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, searchQuery, setSearchQuery }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -155,7 +180,7 @@ const App = () => {
   const [currentShelf, setCurrentShelf] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const toggleFavorite = (bookId) => {
+  const toggleFavorite = useCallback((bookId) => {
     setFavorites(prevFavorites => {
       if (prevFavorites.includes(bookId)) {
         return prevFavorites.filter(id => id !== bookId);
@@ -163,9 +188,9 @@ const App = () => {
         return [...prevFavorites, bookId];
       }
     });
-  };
+  }, []);
 
-  const getBooksByShelf = (shelf) => {
+  const getBooksByShelf = useCallback((shelf, query) => {
     let filteredBooks = books;
     
     if (shelf === 'favorites') {
@@ -174,15 +199,22 @@ const App = () => {
       filteredBooks = books.filter(book => book.shelf === shelf);
     }
 
-    if (searchQuery) {
+    if (query) {
       filteredBooks = filteredBooks.filter(book => 
-        book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.author.toLowerCase().includes(searchQuery.toLowerCase())
+        book.title.toLowerCase().includes(query.toLowerCase()) ||
+        book.author.toLowerCase().includes(query.toLowerCase())
       );
     }
 
     return filteredBooks;
-  };
+  }, [books, favorites]);
+
+  const filteredBooks = useMemo(() => getBooksByShelf(currentShelf, searchQuery), [getBooksByShelf, currentShelf, searchQuery]);
+
+  const debouncedSetSearchQuery = useCallback(
+    debounce((value) => setSearchQuery(value), 300),
+    []
+  );
 
   useEffect(() => {
     setBooks(booksData);
@@ -192,18 +224,14 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/Lexicus" element={<HomePage 
-          books={getBooksByShelf(currentShelf)} 
+          books={filteredBooks} 
           toggleFavorite={toggleFavorite} 
           setShelf={setCurrentShelf} 
           currentShelf={currentShelf} 
           favorites={favorites} 
           searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
+          setSearchQuery={debouncedSetSearchQuery}
         />} />
-        {/* <Route path="/signin" element={<SignIn />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/profile-setup" element={<ProfileSetup />} />
-        <Route path="/add-book" element={<AddBook />} /> */}
       </Routes>
     </Router>
   );
