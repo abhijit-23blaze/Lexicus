@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { Search, Library, Menu, Info, Folder, X } from 'lucide-react';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import ImportBook from './components/ImportBook';
+// import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+// import ImportBook from './components/ImportBook';
 import BookCard from './components/BookCard';
-import SignIn from './components/SignIn';
-import Profile from './components/Profile';
-import { auth, firestore } from './firebase';
+// import SignIn from './components/SignIn';
+// import Profile from './components/Profile';
+// import { auth, firestore } from './firebase';
 import shelvesData from './data/shelves.json';
-import ProfileSetup from './components/ProfileSetup';
-import AddBook from './components/AddBook';
+// import ProfileSetup from './components/ProfileSetup';
+// import AddBook from './components/AddBook';
 import booksData from './data/books.json';
 
 const AboutPopup = ({ isOpen, onClose }) => {
@@ -200,10 +200,10 @@ const App = () => {
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
         />} />
-        <Route path="/signin" element={<SignIn />} />
+        {/* <Route path="/signin" element={<SignIn />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile-setup" element={<ProfileSetup />} />
-        <Route path="/add-book" element={<AddBook />} />
+        <Route path="/add-book" element={<AddBook />} /> */}
       </Routes>
     </Router>
   );
