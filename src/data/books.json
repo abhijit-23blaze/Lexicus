@@ -54,53 +54,82 @@
     "title": "And then there were none..",
     "author": "Agatha Cristie",
     "publisher": "",
-    "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue1cover.jpg",
+    "coverUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1638425885i/16299.jpg",
     "description": "Unveiling our first ever edition! Bringing you New stories, Fresh insights, and Exciting updates.",
     "shelf": "keynote",
-    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS_Issue1.pdf"
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/And Then There Were None (Agatha Christie) (Z-Library).pdf"
   },
   {
     "id": 7,
     "title": "Hitch Hikers guide to the galaxy",
     "author": "Adam Douglas",
     "publisher": "",
-    "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue1cover.jpg",
+    "coverUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1531891848i/11.jpg",
     "description": "Unveiling our first ever edition! Bringing you New stories, Fresh insights, and Exciting updates.",
     "shelf": "keynote",
-    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS_Issue1.pdf"
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/The Hitch Hikers Guide to Galaxy (Douglas Adams) (Z-Library).pdf"
   },
   {
     "id": 8,
     "title": "The Silent Patient",
     "author": "Alex Michaelides",
     "publisher": "",
-    "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue1cover.jpg",
+    "coverUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1668782119i/40097951.jpg",
     "description": "Unveiling our first ever edition! Bringing you New stories, Fresh insights, and Exciting updates.",
     "shelf": "keynote",
-    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS_Issue1.pdf"
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/The Silent Patient (Alex Michaelides) (Z-Library).pdf"
   },
   {
     "id": 9,
     "title": "The Subtle Art of Not Giving a F*ck",
     "author": "Mark Manson",
     "publisher": "calibre 3.44.0",
-    "coverUrl": "https://via.placeholder.com/150",
+    "coverUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1465761302i/28257707.jpg",
     "description": "Empty",
-    "shelf": "selfhelp"
+    "shelf": "selfhelp",
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS_Issue1.pdf"
+    
   },
   {
-      "id": 10,
+    "id": 10,
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "coverUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1655988385i/40121378.jpg",
+    "description": "No matter your goals, Atomic Habits offers a proven framework for improving—every day. James Clear, one of the world's leading experts on habit formation, reveals practical strategies that will teach you exactly how to form good habits, break bad ones, and master the tiny behaviors that lead to remarkable results.",
+    "shelf": "selfhelp",
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS_Issue1.pdf"
+  },
+  {
+    "id": 11,
+    "title": "Zero to One: Notes on Startups, or How to Build the Future",
+    "author": "Peter Thiel",
+    "coverUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1630663027i/18050143.jpg",
+    "description": " In Zero to One, legendary entrepreneur and investor Peter Thiel shows how we can find singular ways to create those new things.",
+    "shelf": "selfhelp",
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS_Issue1.pdf"
+  },
+  {
+    "id": 12,
+    "title": "In the Plex: How Google Thinks, Works, and Shapes Our Lives",
+    "author": "Steven Levy",
+    "coverUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1442810207i/7841446.jpg",
+    "description": "Written with full cooperation from top management, including cofounders Sergey Brin and Larry Page, this is the inside story behind Google, the most successful and most admired technology company of our time, told by one of our best technology writers.",
+    "shelf": "selfhelp",
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS_Issue1.pdf"
+  },
+  {
+      "id": 13,
       "title": "Blue Lock - Volume 01",
       "author": "CamScanner",
       "publisher": "iLovePDF",
       "coverUrl": "https://m.media-amazon.com/images/I/81Z85oL1xvL._SL1500_.jpg",
-      "description": "Empty",
+      "description": "A mad young coach gathers soccer players from across the country to compete in a series of bizarre challenges in a high-tech colosseum he calls Blue Lock. It's a no-balls-barred battle to become Japan's next top striker, in this Squid GamemeetsWorld Cup manga",
       "progress": 99,
       "shelf": "blueLock",
       "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/BLvol1.pdf"
     },
     {
-      "id": 11,
+      "id": 14,
       "title": "Blue Lock - Volume 02",
       "author": "Unknown author",
       "publisher": "",
@@ -111,7 +140,7 @@
       "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 02.pdf"
     },
     {
-      "id": 12,
+      "id": 15,
       "title": "Blue Lock - Volume 03",
       "author": "CamScanner",
       "publisher": "iLovePDF",
@@ -122,7 +151,7 @@
       "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 03.pdf"
     },
     {
-      "id": 13,
+      "id": 16,
       "title": "Blue Lock - Volume 04",
       "author": "CamScanner",
       "publisher": "iLovePDF",
@@ -133,7 +162,7 @@
       "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 04.pdf"
     },
     {
-      "id": 14,
+      "id": 17,
       "title": "Blue Lock - Volume 05",
       "author": "CamScanner",
       "publisher": "iLovePDF",
@@ -144,7 +173,7 @@
       "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 05.pdf"
     },
     {
-      "id": 15,
+      "id": 18,
       "title": "Blue Lock - Volume 06",
       "author": "CamScanner",
       "publisher": "iLovePDF",
@@ -155,7 +184,7 @@
       "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 06.pdf"
     },
     {
-      "id": 16,
+      "id": 19,
       "title": "Blue Lock - Volume 07",
       "author": "CamScanner",
       "publisher": "iLovePDF",
@@ -166,7 +195,7 @@
       "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 07.pdf"
     },
     {
-      "id": 17,
+      "id": 20,
       "title": "Blue Lock - Volume 08",
       "author": "CamScanner",
       "publisher": "iLovePDF",
@@ -177,49 +206,37 @@
       "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock - Volume 08.pdf"
     },
     {
-      "id": 18,
+      "id": 21,
       "title": "Blue Lock - Volume 09",
       "author": "CamScanner",
       "publisher": "iLovePDF",
-      "coverUrl": "https://cdn.kodansha.us/statics/Publications/730/Pages/page-0001.jpg?f=webp&w=405",
+      "coverUrl": "https://m.media-amazon.com/images/I/41R+-o4HHAL._SY445_SX342_.jpg",
       "description": "Empty",
       "progress": 99,
       "shelf": "blueLock",
       "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/BLvol1.pdf"
     },
     {
-      "id": 19,
+      "id": 22,
       "title": "Blue Lock - Volume 10",
       "author": "CamScanner",
       "publisher": "iLovePDF",
-      "coverUrl": "https://cdn.kodansha.us/statics/Publications/729/Pages/page-0001.jpg?f=webp&w=405",
+      "coverUrl": "https://m.media-amazon.com/images/I/51L9pNn6zlL._SY445_SX342_.jpg",
       "description": "Empty",
       "progress": 99,
       "shelf": "blueLock",
       "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/BLvol1.pdf"
     },
     {
-      "id": 20,
+      "id": 23,
       "title": "Blue Lock - Volume 11",
       "author": "CamScanner",
       "publisher": "iLovePDF",
-      "coverUrl": "https://cdn.kodansha.us/statics/Publications/753/Pages/page-0001.jpg?f=webp&w=405",
+      "coverUrl": "https://m.media-amazon.com/images/I/81ZYKavlvkL._SY425_.jpg",
       "description": "Empty",
       "progress": 99,
       "shelf": "blueLock",
       "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/BLvol1.pdf"
-    },
-    {
-      "id": 21,
-      "title": "Blue Lock CH - 267",
-      "author": "CamScanner",
-      "publisher": "iLovePDF",
-      "coverUrl": "https://m.media-amazon.com/images/I/81Z85oL1xvL._SL1500_.jpg",
-      "description": "Empty",
-      "progress": 99,
-      "shelf": "blueLock",
-      "link":"https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/Blue Lock CH - 267.pdf"
     }
-  
 
 ]
