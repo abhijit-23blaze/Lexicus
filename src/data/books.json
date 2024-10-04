@@ -1,55 +1,54 @@
 [
-    {
-      "id": 1,
-      "title": "InsIIITS - 5 : A new start",
-      "author": "InsIIITS",
-      "publisher": "",
-      "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/insIIITs issue 5 cover (1).jpg",
-      "description": "Enoy the latest editionof the Insiits magzine ",
-      "shelf": "insiiits",
-      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/insIIITs issue 5.pdf"
-    },
-    {
-      "id": 2,
-      "title": "InsIIITS - 4 : A new start",
-      "author": "InsIIITS",
-      "publisher": "",
-      "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue4cover.jpg",
-      "description": "Enoy the latest editionof the Insiits magzine ",
-      "shelf": "insiiits",
-      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/insIIITS Issue-4_compressed.pdf"
-    },
-    {
-      "id": 3,
-      "title": "InsIIITS - 3 : A new start",
-      "author": "InsIIITS",
-      "publisher": "",
-      "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue3cover.jpg",
-      "description": "Enoy the latest editionof the Insiits magzine ",
-      "shelf": "insiiits",
-      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS issue 3 (1)_compressed.pdf"
-    },
-    {
-      "id": 4,
-      "title": "InsIIITS - 2 : ",
-      "author": "InsIIITS",
-      "publisher": "",
-      "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue2cover.jpg",
-      "description": "Enoy the latest editionof the Insiits magzine ",
-      "shelf": "insiiits",
-      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS issue 2_compressed.pdf"
-    },
-    {
-      "id": 5,
-      "title": "InsIIITS - 1 : We have a newsletter now ?!",
-      "author": "InsIIITS",
-      "publisher": "",
-      "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue1cover.jpg",
-      "description": "Enoy the latest editionof the Insiits magzine ",
-      "shelf": "insiiits",
-      "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS_Issue1.pdf"
-    }
-    
-
-  ]
+  {
+    "id": 1,
+    "title": "InsIIITS - 5 : Returning Students and Fresh Faces",
+    "author": "InsIIITS",
+    "publisher": "",
+    "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/insIIITs issue 5 cover (1).jpg",
+    "description": "With summer adventures behind us, we’re back and ready for a new semester! A big welcome to our Batch '28 freshers—let’s make this year unforgettable!",
+    "shelf": "insiiits",
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/insIIITs issue 5.pdf"
+  },
+  {
+    "id": 2,
+    "title": "InsIIITS - 4 : Abhisarga Conquered, Summer countdown begins",
+    "author": "InsIIITS",
+    "publisher": "",
+    "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue4cover.jpg",
+    "description": "From fest celebrations to exam preparations, and soon the sweet escape of summer vacation—this edition marks the end of an exciting chapter and the beginning of a relaxing one!",
+    "shelf": "insiiits",
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/insIIITS Issue-4_compressed.pdf"
+  },
+  {
+    "id": 3,
+    "title": "InsIIITS - 3 : Fresh Start & Festive Vibes",
+    "author": "InsIIITS",
+    "publisher": "",
+    "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue3cover.jpg",
+    "description": "Fresh notebooks, new classes, and an amazing fest on the horizon—this semester is about to get exciting. Keep an eye out for what’s coming!",
+    "shelf": "insiiits",
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS issue 3 (1)_compressed.pdf"
+  },
+  {
+    "id": 4,
+    "title": "InsIIITS - 2 : The Mid Semester Madness",
+    "author": "InsIIITS",
+    "publisher": "",
+    "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue2cover.jpg",
+    "description": "From fests to sessions to projects to deadlines, everyone's in full swing and the energy is peaking. Check out the hustle and drive of the semester's busiest period!",
+    "shelf": "insiiits",
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS issue 2_compressed.pdf"
+  },
+  {
+    "id": 5,
+    "title": "InsIIITS - 1 : The First Glimpse",
+    "author": "InsIIITS",
+    "publisher": "",
+    "coverUrl": "https://lexicus.blob.core.windows.net/%24web/external/covers/issue1cover.jpg",
+    "description": "Unveiling our first ever edition! Bringing you New stories, Fresh insights, and Exciting updates.",
+    "shelf": "insiiits",
+    "link": "https://lexicus.z29.web.core.windows.net/external/pdf/web/viewer.html?file=PDFs/InsIIITS_Issue1.pdf"
+  }
   
+
+]
