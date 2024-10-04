@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-const BookCard = React.memo(({ book, toggleFavorite, isFavorite }) => {
-  const handleCardClick = useCallback(() => {
-    window.open(book.link, '_blank', 'noopener,noreferrer');
-  }, [book.link]);
+const BookCard = ({ book, toggleFavorite, isFavorite }) => {
+  const handleCardClick = () => {
+    window.location.href = book.link;
+  };
 
   return (
     <div 
@@ -18,7 +15,6 @@ const BookCard = React.memo(({ book, toggleFavorite, isFavorite }) => {
             alt={book.title} 
             className="absolute inset-0 w-full h-full object-cover rounded"
             style={{ boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}
-            loading="lazy"
           />
         </div>
         <div className="flex flex-col justify-between flex-grow">
@@ -31,6 +27,6 @@ const BookCard = React.memo(({ book, toggleFavorite, isFavorite }) => {
       </div>
     </div>
   );
-});
+};
 
 export default BookCard;
