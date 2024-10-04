@@ -1,21 +1,10 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useParams, useNavigate } from 'react-router-dom';
 import { FixedSizeGrid as Grid } from 'react-window';
 import { debounce } from 'lodash';
-import shelvesData from './data/shelves.json';
-import booksData from './data/books.json';
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import { Search, Library, Menu, Info, Folder, X } from 'lucide-react';
-// import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-// import ImportBook from './components/ImportBook';
+import { Search, Library, Menu, Info, X } from 'lucide-react';
 import BookCard from './components/BookCard';
-// import SignIn from './components/SignIn';
-// import Profile from './components/Profile';
-// import { auth, firestore } from './firebase';
 import shelvesData from './data/shelves.json';
-// import ProfileSetup from './components/ProfileSetup';
-// import AddBook from './components/AddBook';
 import booksData from './data/books.json';
 
 
@@ -93,28 +82,37 @@ const Header = ({ toggleSidebar, searchQuery, setSearchQuery, openAboutPopup }) 
   );
 };
 
-const Sidebar = ({ isOpen, toggleSidebar, setShelf, currentShelf }) => (
+const Sidebar = ({ isOpen, toggleSidebar, currentShelf }) => (
   <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white p-4 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0`}>
     <button onClick={toggleSidebar} className="absolute top-4 right-4 text-gray-600 lg:hidden">
       <X size={24} />
     </button>
     <nav className="mt-8 lg:mt-0">
       <ul>
+        <li className="mb-2">
+          <Link 
+            to="/Lexicus/all" 
+            className={`flex items-center ${currentShelf === 'all' ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}
+          >
+            <Library className="mr-2" />
+            All Books
+          </Link>
+        </li>
         {shelvesData.map(shelf => (
           <li className="mb-2" key={shelf.id}>
-            <button 
-              onClick={() => setShelf(shelf.id)} 
-              className={`flex items-center ${currentShelf === shelf.id ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}>
-              {React.createElement(Library, { className: "mr-2" })} {/* Adjust icon logic if necessary */}
+            <Link 
+              to={`/Lexicus/${shelf.id}`}
+              className={`flex items-center ${currentShelf === shelf.id ? 'text-purple-600 font-semibold' : 'text-gray-600'}`}
+            >
+              <Library className="mr-2" />
               {shelf.name}
-            </button>
+            </Link>
           </li>
         ))}
       </ul>
     </nav>
   </aside>
 );
-
 const BookGrid = React.memo(({ books, toggleFavorite, favorites }) => {
   const cellRenderer = useCallback(({ columnIndex, rowIndex, style }) => {
     const index = rowIndex * 4 + columnIndex;
@@ -146,9 +144,10 @@ const BookGrid = React.memo(({ books, toggleFavorite, favorites }) => {
 });
 
 
-const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, searchQuery, setSearchQuery }) => {
+const HomePage = ({ books, toggleFavorite, favorites, searchQuery, setSearchQuery }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAboutPopupOpen, setIsAboutPopupOpen] = useState(false);
+  const { shelf = 'all' } = useParams();
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const openAboutPopup = () => setIsAboutPopupOpen(true);
@@ -163,7 +162,7 @@ const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, se
         openAboutPopup={openAboutPopup}
       />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} setShelf={setShelf} currentShelf={currentShelf} />
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} currentShelf={shelf} />
         <main className="flex-1 overflow-y-auto">
           <BookGrid books={books} toggleFavorite={toggleFavorite} favorites={favorites} />
         </main>
@@ -175,10 +174,9 @@ const HomePage = ({ books, toggleFavorite, setShelf, currentShelf, favorites, se
 
 const App = () => {
   const [books, setBooks] = useState([]);
-  const [shelves] = useState(shelvesData);
   const [favorites, setFavorites] = useState([]);
-  const [currentShelf, setCurrentShelf] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const toggleFavorite = useCallback((bookId) => {
     setFavorites(prevFavorites => {
@@ -209,8 +207,6 @@ const App = () => {
     return filteredBooks;
   }, [books, favorites]);
 
-  const filteredBooks = useMemo(() => getBooksByShelf(currentShelf, searchQuery), [getBooksByShelf, currentShelf, searchQuery]);
-
   const debouncedSetSearchQuery = useCallback(
     debounce((value) => setSearchQuery(value), 300),
     []
@@ -221,20 +217,27 @@ const App = () => {
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/Lexicus" element={<HomePage 
-          books={filteredBooks} 
-          toggleFavorite={toggleFavorite} 
-          setShelf={setCurrentShelf} 
-          currentShelf={currentShelf} 
-          favorites={favorites} 
-          searchQuery={searchQuery}
-          setSearchQuery={debouncedSetSearchQuery}
-        />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route 
+        path="/Lexicus/:shelf?" 
+        element={
+          <HomePage 
+            books={useMemo(() => getBooksByShelf(useParams().shelf || 'all', searchQuery), [getBooksByShelf, useParams().shelf, searchQuery])}
+            toggleFavorite={toggleFavorite}
+            favorites={favorites}
+            searchQuery={searchQuery}
+            setSearchQuery={debouncedSetSearchQuery}
+          />
+        } 
+      />
+    </Routes>
   );
 };
 
-export default App;
+const AppWrapper = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default AppWrapper;

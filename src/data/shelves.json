@@ -9,6 +9,24 @@
       "id": "insiiits",
       "name": "InsIIITS",
       "icon": "Library"
+    },
+    
+    {
+      "id": "keynote",
+      "name": "Keynote curated",
+      "icon": "Library"
+    },
+    
+    {
+      "id": "selfhelp",
+      "name": "Self Help",
+      "icon": "Library"
+    },
+    
+    {
+      "id": "bluelock",
+      "name": "Blue Lock",
+      "icon": "Library"
     }
   ]
   

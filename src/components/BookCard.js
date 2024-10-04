@@ -1,3 +1,6 @@
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 const BookCard = React.memo(({ book, toggleFavorite, isFavorite }) => {
   const handleCardClick = useCallback(() => {
     window.open(book.link, '_blank', 'noopener,noreferrer');
@@ -29,3 +32,5 @@ const BookCard = React.memo(({ book, toggleFavorite, isFavorite }) => {
     </div>
   );
 });
+
+export default BookCard;
