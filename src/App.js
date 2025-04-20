@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate, useParams, Navigate } from 'react-router-dom';
 import { Search, Library, Menu, Info, Folder, X } from 'lucide-react';
 // import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 // import ImportBook from './components/ImportBook';
@@ -202,6 +202,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        <Route 
+          path="/" 
+          element={<Navigate to="/Lexicus" replace />} 
+        />
         <Route 
           path="/Lexicus" 
           element={<HomePage 
