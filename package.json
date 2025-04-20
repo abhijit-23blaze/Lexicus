@@ -2,7 +2,6 @@
   "name": "lexicus-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://abhijit-23blaze.github.io/Lexicus",
   "dependencies": {
     "@azure/storage-blob": "^12.24.0",
     "@tailwindcss/line-clamp": "^0.4.4",
